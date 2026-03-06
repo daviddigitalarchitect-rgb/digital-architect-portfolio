@@ -330,7 +330,7 @@ body.light-mode .link-action:hover { color: var(--gold) !important; }
 /* =========================================
    11. REVIEWS SECTION
    ========================================= */
-.reviews-section { padding: 120px 5% 60px; background: var(--bg-color); }
+/* .reviews-section { padding: 120px 5% 60px; background: var(--bg-color); }
 .text-center { text-align: center; margin-bottom: 60px; }
 .bento-reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; }
 .review-card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(197, 160, 89, 0.15); border-radius: 20px; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease; }
@@ -345,7 +345,102 @@ body.light-mode .link-action:hover { color: var(--gold) !important; }
 
 .review-text { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-style: italic; line-height: 1.7; color: var(--text-main); margin-bottom: 30px; }
 .client-info h4 { font-family: 'Inter', sans-serif; font-size: 1.1rem; color: var(--gold); margin-bottom: 5px; }
-.client-role { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.client-role { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; } */
+
+
+
+
+/* --- COMMITMENT SECTION STYLES --- */
+.client-commitment-section {
+  background-color: #f6f5f2; /* Light cream background */
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.commitment-header .subtitle {
+  color: #a68a56; /* Gold/Brown */
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.commitment-header h2 {
+  font-size: 48px;
+  color: #222;
+  margin-top: 10px;
+  font-family: 'Times New Roman', serif; /* Replace with your serif font */
+}
+
+.commitment-header h2 em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.commitment-cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.commitment-card {
+  background-color: #efede7; /* Slightly darker cream for the card */
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 420px;
+  text-align: left;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.stars {
+  color: #a68a56;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.badge {
+  background-color: #e2f4ea;
+  color: #179c65;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.quote {
+  font-family: 'Times New Roman', serif; /* Replace with your serif font */
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #111;
+  margin-bottom: 40px;
+}
+
+.author-area h4 {
+  color: #a68a56;
+  font-size: 18px;
+  margin: 0 0 5px 0;
+}
+
+.author-area span {
+  color: #888;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+
+
+
 
 /* =========================================
    12. NATURAL LANGUAGE FORM
