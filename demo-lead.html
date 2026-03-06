@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Elite Lead-Gen Demo | The Digital Estate</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. GLOBAL VARIABLES & LIGHT THEME
+           ========================================= */
+        :root {
+            --gold: #b08436; /* Deepened for white contrast */
+            --bg-white: #ffffff;
+            --bg-offwhite: #f9f9f9;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --border-light: rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 2. NAVIGATION & BADGES --- */
+        .return-badge {
+            position: fixed;
+            top: 30px; left: 40px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            z-index: 100;
+            transition: color 0.3s ease;
+        }
+        .return-badge:hover { color: var(--text-main); }
+
+        /* --- 3. HERO SPLIT LAYOUT --- */
+        .split-layout { display: flex; min-height: 100vh; }
+
+        .content-side {
+            flex: 1;
+            display: flex; align-items: center; justify-content: center;
+            padding: 60px 8%;
+            background: var(--bg-white);
+            z-index: 3;
+        }
+
+        .visual-side {
+            flex: 1.2;
+            position: relative;
+            display: flex; align-items: flex-end;
+            padding: 60px;
+        }
+
+        .visual-side img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 1;
+        }
+
+        /* White gradient fade to blend the image seamlessly into the form */
+        .visual-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, var(--bg-white) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            z-index: 2;
+        }
+
+        .proof-badge {
+            position: relative; z-index: 3;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+            padding: 30px 40px; border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .proof-number {
+            display: block; font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--text-main); margin-bottom: 5px;
+        }
+
+        .proof-text {
+            font-size: 0.85rem; color: var(--gold);
+            text-transform: uppercase; letter-spacing: 2px; font-weight: 600;
+        }
+
+        /* --- 4. BRANDING & COPY --- */
+        .form-wrapper { max-width: 550px; width: 100%; }
+
+        .brand-logo {
+            font-size: 0.9rem; letter-spacing: 4px; color: var(--text-main);
+            display: block; margin-bottom: 60px; font-weight: 600;
+        }
+        .brand-logo span { color: var(--gold); }
+
+        .demo-title {
+            font-family: 'Playfair Display', serif; font-size: 3.8rem;
+            line-height: 1.1; margin-bottom: 20px; color: var(--text-main);
+        }
+        .demo-title em { color: var(--gold); font-style: italic; }
+
+        .demo-subtext {
+            font-size: 1.05rem; color: var(--text-muted);
+            line-height: 1.7; margin-bottom: 50px;
+        }
+
+        /* --- 5. LUXURY FORM SYSTEM (LIGHT MODE) --- */
+        .luxury-form { display: flex; flex-direction: column; gap: 30px; }
+        .input-row { display: flex; gap: 20px; }
+        .input-group { position: relative; width: 100%; }
+
+        .input-group input {
+            width: 100%; background: transparent; border: none;
+            border-bottom: 1px solid var(--border-light); padding: 15px 0;
+            font-size: 1rem; color: var(--text-main); font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease; outline: none;
+        }
+
+        .input-group input:focus { border-bottom-color: var(--text-main); }
+
+        .input-group label {
+            position: absolute; top: 15px; left: 0; color: #999;
+            font-size: 1rem; pointer-events: none; transition: all 0.3s ease;
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label {
+            top: -10px; font-size: 0.75rem; color: var(--text-main);
+            letter-spacing: 1px; text-transform: uppercase; font-weight: 600;
+        }
+
+        .error-tip {
+            position: absolute; bottom: -22px; left: 0; font-size: 0.65rem;
+            color: #ff3b30; text-transform: uppercase; letter-spacing: 1px;
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+
+        .was-validated .input-group input:invalid { border-bottom-color: #ff3b30 !important; }
+        .was-validated .input-group input:invalid ~ .error-tip { opacity: 1; }
+
+        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        .submit-btn {
+            background: var(--text-main); color: #fff; border: none; padding: 20px;
+            font-size: 0.9rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 2px; cursor: pointer; margin-top: 10px;
+            transition: var(--transition); border-radius: 4px;
+        }
+        .submit-btn:hover { background: var(--gold); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(176, 132, 54, 0.2); }
+
+        #success-message { padding: 60px 0; text-align: left; display: none; }
+        #success-message h2 { font-family: 'Playfair Display'; font-size: 3rem; margin-bottom: 10px; }
+        #success-message h2 em { color: var(--gold); font-style: italic; }
+
+        /* --- 6. TRUST, PROCESS & TESTIMONIALS --- */
+        .trust-bar { 
+            background: var(--bg-offwhite); padding: 40px 0; 
+            border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); 
+        }
+        .trust-container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .logo-grid { display: flex; gap: 60px; opacity: 0.6; font-weight: 700; letter-spacing: 2px; color: var(--text-main); }
+
+        .process-section { padding: 120px 8%; background: var(--bg-white); }
+        .process-header { margin-bottom: 80px; text-align: center; }
+        .process-title { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 15px; color: var(--text-main); }
+        .process-title em { color: var(--gold); font-style: italic; }
+
+        .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .process-card { 
+            padding: 50px 40px; background: #ffffff; border: 1px solid rgba(0,0,0,0.03); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03); border-radius: 8px; transition: var(--transition); 
+        }
+        .process-card:hover { transform: translateY(-10px); border-color: rgba(176, 132, 54, 0.3); box-shadow: 0 25px 50px rgba(0,0,0,0.06); }
+        
+        .process-num { display: block; font-size: 0.8rem; color: var(--gold); margin-bottom: 20px; font-weight: 700; }
+        .process-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 15px; color: var(--text-main); }
+        .process-card p { color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
+
+        .testimonial-section { padding: 150px 10%; background: var(--bg-offwhite); text-align: center; border-bottom: 1px solid var(--border-light); }
+        .quote-icon { margin-bottom: 30px; opacity: 0.8; }
+        .quote { font-family: 'Playfair Display', serif; font-size: 3rem; font-style: italic; line-height: 1.2; margin: 0 auto 50px; color: var(--text-main); max-width: 1000px; }
+        .author-name { display: block; font-weight: 700; letter-spacing: 4px; font-size: 1rem; color: var(--text-main); margin-bottom: 5px; }
+        .author-title { font-size: 0.8rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+
+        .final-cta { padding: 100px 5%; background: var(--bg-white); text-align: center; }
+        .final-cta h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-main); margin-bottom: 40px; }
+        .final-cta em { color: var(--gold); font-style: italic; }
+        .back-to-form { 
+            display: inline-block; padding: 20px 50px; border: 1px solid var(--text-main); 
+            color: var(--text-main); text-decoration: none; font-weight: 600; letter-spacing: 2px; 
+            text-transform: uppercase; transition: var(--transition); border-radius: 4px;
+        }
+        .back-to-form:hover { background: var(--text-main); color: var(--bg-white); transform: translateY(-5px); }
+
+        .demo-footer { padding: 40px; text-align: center; background: var(--bg-offwhite); }
+        .demo-footer p { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; font-weight: 500; text-transform: uppercase; }
+
+        /* --- 7. THE RESPONSIVE MATRIX (ALL MOBILE FIXES) --- */
+        @media (max-width: 992px) {
+            .split-layout { flex-direction: column; }
+            .visual-side { min-height: 50vh; padding: 40px; order: 2; }
+            .content-side { padding: 80px 5%; order: 1; }
+            .input-row { flex-direction: column; gap: 30px; }
+            .visual-overlay { background: linear-gradient(to bottom, var(--bg-white) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%); }
+        }
+
+        @media (max-width: 768px) {
+            .demo-title { font-size: 2.5rem !important; line-height: 1.1 !important; margin-bottom: 15px; }
+            .demo-subtext { font-size: 1rem; margin-bottom: 40px; }
+            .process-title { font-size: 2.2rem !important; }
+            .quote { font-size: 1.8rem !important; padding: 0 5%; }
+            .final-cta h2 { font-size: 1.8rem !important; }
+
+            .process-header, .testimonial-section, .final-cta, .demo-footer { text-align: center !important; }
+            
+            .submit-btn, .back-to-form { width: 100% !important; padding: 18px !important; font-size: 0.85rem !important; }
+            .input-group { margin-bottom: 30px; }
+            
+            .process-grid { grid-template-columns: 1fr; gap: 25px; }
+            .process-section, .testimonial-section { padding: 80px 6% !important; }
+            .logo-grid { gap: 30px; flex-wrap: wrap; justify-content: center; }
+            
+            .return-badge { top: 20px; left: 20px; font-size: 0.7rem; }
+            .proof-badge { padding: 20px 30px; }
+        }
+
+        @media (max-width: 480px) {
+            .demo-title { font-size: 2rem !important; }
+            .brand-logo { margin-bottom: 40px; }
+            .proof-number { font-size: 2rem; }
+            .content-side { padding: 80px 6% 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="return-badge">&larr; Exit Demo</a>
+
+    <div class="split-layout">
+        <div class="content-side">
+            <div class="form-wrapper">
+                <span class="brand-logo">THE BEVERLY <span>HUB.</span></span>
+                
+                <div id="lead-content">
+                    <h1 class="demo-title">Access <em>Exclusive</em> Listings.</h1>
+                    <p class="demo-subtext">Register below to receive private viewing access and off-market property portfolios tailored to your criteria.</p>
+
+                    <form class="luxury-form" id="lead-form" novalidate>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <input type="text" id="fname" required placeholder=" ">
+                                <label for="fname">First Name</label>
+                                <span class="error-tip">Required</span>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="lname" required placeholder=" ">
+                                <label for="lname">Last Name</label>
+                                <span class="error-tip">Required</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="email" id="email" required placeholder=" ">
+                            <label for="email">Email Address</label>
+                            <span class="error-tip">Valid email required</span>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="tel" id="phone" pattern="\d{11}" maxlength="11" required placeholder=" " oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                            <label for="phone">Phone (11 Digits)</label>
+                            <span class="error-tip">11 digits required</span>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submit-action">Request Access &rarr;</button>
+                        <p style="font-size: 0.75rem; color: #888; text-align: center; margin-top: 15px;">Your information is securely encrypted.</p>
+                    </form>
+                </div>
+
+                <div id="success-message">
+                    <h2>Access <em>Granted.</em></h2>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">Your credentials have been verified. An advisor will contact you shortly with your private portfolio.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="visual-side">
+            <div class="visual-overlay"></div>
+            <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Luxury Estate">
+            
+            <div class="proof-badge">
+                <span class="proof-number">$120M+</span>
+                <span class="proof-text">Off-Market Assets</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="trust-bar">
+        <div class="trust-container">
+            <span style="font-size: 0.7rem; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Trusted By Industry Leaders</span>
+            <div class="logo-grid">
+                <span>FORBES</span>
+                <span>WSJ</span>
+                <span>ARCHITECTURAL DIGEST</span>
+                <span>BLOOMBERG</span>
+            </div>
+        </div>
+    </div>
+
+    <section class="process-section">
+        <div class="process-header">
+            <h2 class="process-title">The <em>Acquisition</em> Process</h2>
+            <p style="color: var(--text-muted); letter-spacing: 1px;">How we secure your next asset.</p>
+        </div>
+        <div class="process-grid">
+            <div class="process-card">
+                <span class="process-num">01</span>
+                <h3>Private Consultation</h3>
+                <p>We begin with a confidential analysis of your exact architectural preferences, location requirements, and portfolio goals.</p>
+            </div>
+            <div class="process-card">
+                <span class="process-num">02</span>
+                <h3>Asset Curation</h3>
+                <p>Our team leverages global networks to curate a bespoke list of on-market and exclusive off-market luxury estates.</p>
+            </div>
+            <div class="process-card">
+                <span class="process-num">03</span>
+                <h3>Secure Acquisition</h3>
+                <p>From private viewings to final negotiations, we handle the entire transaction with absolute discretion and precision.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial-section">
+        <svg class="quote-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1.5.5 1.5 1.717L3 21zM15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.5c0 1.217-.5 1.717-1.5 1.717L15 21z"></path>
+        </svg>
+        <p class="quote">"Standard listings often miss the unique architectural value of a luxury property. Moving to a custom digital estate provided the exact exclusivity and precision we needed for a record-breaking exit."</p>
+        <span class="author-name">JULIAN MARCELLO</span>
+        <span class="author-title">LUXURY ASSET ADVISOR</span>
+    </section>
+
+    <section class="final-cta">
+        <h2>Ready to build your <em>Digital Estate?</em></h2>
+        <a href="#" class="back-to-form" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Return to Form</a>
+    </section>
+
+    <footer class="demo-footer">
+        <p>&copy; 2026 [YOUR BROKERAGE]. ALL RIGHTS RESERVED. | ARCHITECTED BY DAVID OLAWALE</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('lead-form');
+        const submitBtn = document.getElementById('submit-action');
+        const contentDiv = document.getElementById('lead-content');
+        const successDiv = document.getElementById('success-message');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.classList.add('was-validated');
+
+            if (!form.checkValidity()) {
+                submitBtn.classList.add('shake');
+                setTimeout(() => submitBtn.classList.remove('shake'), 400);
+                return;
+            }
+
+            // Processing UI
+            submitBtn.textContent = "Encrypting Data...";
+            submitBtn.style.pointerEvents = 'none';
+
+            // Success Transition
+            setTimeout(() => {
+                contentDiv.style.display = 'none';
+                successDiv.style.display = 'block';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

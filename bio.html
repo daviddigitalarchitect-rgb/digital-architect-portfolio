@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>David Olawale | Digital Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. CORE RESET & LIGHT LUXURY VARIABLES --- */
+        :root {
+            --gold: #b08436; 
+            --text-dark: #1a1a1a;
+            --text-muted: #4a4a4a;
+            --transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            color: var(--text-dark); 
+            font-family: 'Inter', sans-serif; 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; overflow-x: hidden; padding: 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 2. HIGH-RES IMAGE BACKGROUND (LIVE LINK) --- */
+        .image-bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            /* Pointing directly to a live, high-quality luxury architecture image */
+            background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2075&q=80') center/cover no-repeat fixed;
+            background-color: #e9ecef; 
+        }
+
+        /* A light, transparent wash to keep the overall aesthetic bright and text readable */
+        .image-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.25); 
+        }
+
+        /* --- 3. THE TRUE FROSTED GLASS DASHBOARD --- */
+        .dashboard-container {
+            position: relative; z-index: 2;
+            width: 100%; max-width: 900px;
+            
+            /* Authentic Glassmorphism settings */
+            background: rgba(255, 255, 255, 0.4); 
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
+            border: 1px solid rgba(255, 255, 255, 0.8); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1), inset 0 0 20px rgba(255,255,255,0.7); 
+            
+            border-radius: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            overflow: hidden;
+            animation: slideUp 1s var(--transition) forwards;
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 4. LEFT: PROFILE COLUMN --- */
+        .profile-side {
+            padding: 60px 50px;
+            background: rgba(255, 255, 255, 0.3); 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .profile-img {
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 3px solid #fff; padding: 4px; margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            background: var(--gold);
+        }
+        .profile-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+        .agent-name { 
+            font-family: 'Playfair Display', serif; font-size: 2.2rem; 
+            font-weight: 700; margin-bottom: 8px; color: var(--text-dark);
+        }
+        .agent-title { 
+            font-size: 0.75rem; color: var(--gold); letter-spacing: 3px; 
+            text-transform: uppercase; font-weight: 700; margin-bottom: 25px; 
+        }
+        
+        .profile-bio {
+            font-size: 0.95rem; color: var(--text-muted); line-height: 1.6;
+            margin-bottom: 30px; font-weight: 500;
+        }
+
+        /* --- 5. RIGHT: ACTION LINKS COLUMN --- */
+        .links-side {
+            padding: 60px 50px;
+            display: flex; flex-direction: column; justify-content: center; gap: 15px;
+        }
+        
+        .side-title {
+            font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px;
+            text-transform: uppercase; font-weight: 700; margin-bottom: 10px;
+        }
+
+        .bio-link {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            padding: 18px 25px; border-radius: 8px; 
+            color: var(--text-dark); text-decoration: none; font-weight: 600;
+            font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;
+            transition: var(--transition); display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .bio-link:hover {
+            background: #ffffff; border-color: #ffffff;
+            transform: translateX(5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        /* Primary Highlighted Link */
+        .bio-link.primary { 
+            background: var(--text-dark); color: #ffffff; border: none; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative; overflow: hidden;
+        }
+        .bio-link.primary:hover {
+            background: var(--gold); transform: translateX(5px); color: #ffffff;
+        }
+        
+        /* The Sweeping Light Glare Effect */
+        .bio-link.primary::after {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg); animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; }
+        }
+
+        /* --- 6. SOCIAL ROW --- */
+        .social-row { display: flex; justify-content: center; gap: 20px; }
+        .social-icon { color: var(--text-dark); opacity: 0.7; transition: var(--transition); }
+        .social-icon:hover { color: var(--gold); opacity: 1; transform: translateY(-3px); }
+
+        /* --- 7. MOBILE RESPONSIVE MATRIX --- */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+            }
+            .profile-side { padding: 50px 30px 30px; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+            .links-side { padding: 40px 30px 50px; }
+            .profile-bio { display: none; }
+            .bio-link { font-size: 0.8rem; padding: 16px 20px; justify-content: center; text-align: center; }
+            .bio-link svg { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="image-bg-container">
+        <div class="image-overlay"></div>
+    </div>
+
+    <div class="dashboard-container">
+        
+        <div class="profile-side">
+            <div class="profile-img">
+                <img src="assets/img/pent.jpg" alt="David Olawale">
+            </div>
+            <h1 class="agent-name">David Olawale</h1>
+            <span class="agent-title">Digital Architect</span>
+            <p class="profile-bio">Building elite, conversion-focused digital systems and high-speed web assets for the luxury real estate sector.</p>
+            
+            <div class="social-row">
+                <a href="https://www.instagram.com/davids.builds?" target="_blank" class="social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/david-digital-architect" target="_blank" class="social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="links-side">
+            <span class="side-title">Select Destination</span>
+            
+            <a href="demo-property.html" class="bio-link primary">
+                <span>View The Shadow Estate</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="demo-lead.html" class="bio-link">
+                <span>Request Private Valuation</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+            <a href="https://wa.me/message/GGZMCXR3QETYH1" target="_blank" class="bio-link">
+                <span>WhatsApp Secure Chat</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+            <a href="index.html" class="bio-link">
+                <span>Main Portfolio</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,542 @@
+/* --- Elite Lead-Gen Demo CSS --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0a0a0a;
+    color: #f8f8f8;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Return to Portfolio Badge */
+.return-badge {
+    position: fixed;
+    top: 30px;
+    left: 40px;
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    z-index: 100;
+    transition: color 0.3s ease;
+}
+.return-badge:hover { color: #c5a059; }
+
+/* The Split Layout */
+.split-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Left Side: Copy and Form */
+.content-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 8%;
+}
+
+.form-wrapper {
+    max-width: 550px;
+    width: 100%;
+}
+
+.brand-logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 4px;
+    color: #fff;
+    display: block;
+    margin-bottom: 60px;
+}
+.brand-logo span { color: #c5a059; }
+
+.demo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.8rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+.demo-title em { color: #c5a059; font-style: italic; }
+
+.demo-subtext {
+    font-size: 1.05rem;
+    color: #a0a0a0;
+    line-height: 1.7;
+    margin-bottom: 50px;
+}
+
+/* Luxury Input Fields (Floating Labels) */
+.luxury-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.input-row {
+    display: flex;
+    gap: 20px;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+.input-group input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 0;
+    font-size: 1rem;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-bottom-color: #c5a059;
+}
+
+.input-group label {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    color: #888;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+
+/* --- Sophisticated State-Based Validation --- */
+.error-tip {
+    position: absolute;
+    bottom: -22px;
+    left: 0;
+    font-size: 0.65rem;
+    color: #ff5f56;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* ONLY show red borders and tips if:
+   1. The form has the 'was-validated' class (user clicked submit)
+   2. OR the user has typed something and it's still wrong (:not(:placeholder-shown))
+*/
+
+.was-validated .input-group input:invalid,
+.input-group input:not(:placeholder-shown):invalid {
+    border-bottom-color: #ff5f56 !important;
+}
+
+.was-validated .input-group input:invalid ~ .error-tip,
+.input-group input:not(:placeholder-shown):invalid ~ .error-tip {
+    opacity: 1; /* Revealed only on error state */
+}
+
+/* Shake animation for the button */
+.shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+
+/* Floating label magic */
+.input-group input:focus ~ label,
+.input-group input:valid ~ label {
+    top: -10px;
+    font-size: 0.75rem;
+    color: #c5a059;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.submit-btn {
+    background: #c5a059;
+    color: #0a0a0a;
+    border: none;
+    padding: 20px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+.submit-btn:hover { background: #fff; }
+
+.privacy-note {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+#success-message {
+    padding: 60px 0;
+    text-align: left; 
+}
+
+#success-message h2 em {
+    color: #c5a059;
+    font-style: italic;
+}
+
+.success-icon {
+    margin-bottom: 30px;
+}
+
+
+/* Right Side: The Visual */
+.visual-side {
+    flex: 1.2;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 60px;
+}
+
+.visual-side img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.visual-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to right, #0a0a0a 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.1) 100%);
+    z-index: 2;
+}
+
+/* The Social Proof Badge */
+.proof-badge {
+    position: relative;
+    z-index: 3;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 30px 40px;
+    border-radius: 4px;
+}
+
+.proof-number {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.proof-text {
+    font-size: 0.85rem;
+    color: #c5a059;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 992px) {
+    .split-layout { flex-direction: column; }
+    .visual-side { min-height: 50vh; padding: 40px; }
+    .content-side { padding: 80px 5%; }
+    .input-row { flex-direction: column; gap: 30px; }
+    .return-badge { top: 20px; left: 20px; }
+}
+
+
+
+
+
+
+
+/* --- Trust Bar Styling --- */
+.trust-bar {
+    background: #0d0d0d;
+    padding: 40px 0;
+    border-top: 1px solid rgba(197, 160, 89, 0.1);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+}
+.trust-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.trust-container span {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: #555;
+}
+.logo-grid {
+    display: flex;
+    gap: 60px;
+    opacity: 0.4;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+/* --- Process Section Styling --- */
+.process-section {
+    padding: 120px 8%;
+    background: #0a0a0a;
+}
+.process-header {
+    margin-bottom: 80px;
+    text-align: center;
+}
+.process-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+.process-title em { color: #c5a059; font-style: italic; }
+.process-subtitle { color: #888; letter-spacing: 1px; }
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+.process-card {
+    padding: 40px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(197, 160, 89, 0.05);
+    transition: transform 0.4s ease;
+}
+.process-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(197, 160, 89, 0.3);
+}
+.process-num {
+    display: block;
+    font-size: 0.8rem;
+    color: #c5a059;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+.process-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+.process-card p {
+    color: #777;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* --- Enhanced Testimonial Styling --- */
+.testimonial-section {
+    padding: 180px 10%;
+    background: #0d0d0d;
+    text-align: center;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.05);
+}
+
+.quote-icon {
+    margin-bottom: 30px;
+    opacity: 0.6;
+}
+
+.quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; /* Much louder and more confident */
+    font-style: italic;
+    line-height: 1.2;
+    margin-bottom: 50px;
+    color: #ffffff;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.author-name {
+    display: block;
+    font-weight: 600;
+    letter-spacing: 4px;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.author-title {
+    font-size: 0.8rem;
+    color: #c5a059;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* --- Final CTA Section --- */
+.final-cta {
+    padding: 100px 5%;
+    background: #0a0a0a;
+    text-align: center;
+}
+
+.final-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.final-cta em {
+    color: #c5a059;
+    font-style: italic;
+}
+
+.back-to-form {
+    display: inline-block;
+    padding: 20px 50px;
+    background: transparent;
+    border: 1px solid #c5a059;
+    color: #c5a059;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.back-to-form:hover {
+    background: #c5a059;
+    color: #0a0a0a;
+    transform: translateY(-5px);
+}
+
+/* --- Footer --- */
+.demo-footer {
+    padding: 40px;
+    text-align: center;
+    background: #080808;
+}
+
+.demo-footer p {
+    font-size: 0.7rem;
+    color: #444;
+    letter-spacing: 2px;
+}
+
+/* Mobile Tweaks */
+@media (max-width: 900px) {
+    .quote { font-size: 2rem; }
+    .final-cta h2 { font-size: 1.8rem; }
+}
+
+@media (max-width: 850px) {
+    /* Break the Split Screen Hero */
+    .split-layout {
+        flex-direction: column;
+    }
+
+    .content-side, .image-side {
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+    }
+
+    .form-wrapper {
+        padding: 60px 8%;
+    }
+
+    /* Form Row: Stack Email and Phone */
+    .input-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .input-group {
+        margin-bottom: 40px;
+    }
+
+    .demo-title {
+        font-size: 2.5rem !important;
+    }
+}
+
+/* =========================================
+   THE RESPONSIVE MATRIX (MOBILE VIEW FOR DEMO-LEAD)
+   ========================================= */
+
+/* --- TABLETS & SMALL LAPTOPS --- */
+@media (max-width: 992px) {
+    /* 1. Stack the Hero Layout */
+    .split-layout { flex-direction: column; }
+    
+    /* Image moves below form so they see the lead capture first */
+    .content-side { padding: 80px 5%; order: 1; }
+    .visual-side { min-height: 50vh; padding: 40px; order: 2; } 
+    
+    /* 2. Form Row Adjustments */
+    .input-row { flex-direction: column; gap: 30px; }
+}
+
+/* --- STANDARD SMARTPHONES (THE MASTER FIX) --- */
+@media (max-width: 768px) {
+    /* 1. Typography Refinement (Editorial Downscale) */
+    .demo-title { font-size: 2.2rem !important; line-height: 1.2 !important; margin-bottom: 15px; }
+    .demo-subtext { font-size: 0.95rem; margin-bottom: 40px; }
+    .process-title { font-size: 2.2rem !important; }
+    .quote { font-size: 1.8rem !important; padding: 0 5%; }
+    .final-cta h2 { font-size: 1.8rem !important; }
+    .process-card h3 { font-size: 1.3rem !important; }
+
+    /* 2. Global Centering Fix for Mobile */
+    .process-header, .testimonial-section, .final-cta, .demo-footer {
+        text-align: center !important;
+    }
+
+    /* 3. Button & Input Scaling */
+    .submit-btn, .back-to-form { 
+        width: 100% !important; 
+        padding: 16px !important; 
+        font-size: 0.85rem !important; 
+    }
+    
+    /* Ensures floating labels have room to jump up without hitting the text above */
+    .input-group { margin-bottom: 30px; } 
+    
+    /* 4. Spacing Gaps & Layout fixes */
+    .process-grid { grid-template-columns: 1fr; gap: 25px; }
+    .process-section, .testimonial-section { padding: 80px 5% !important; }
+    .logo-grid { gap: 30px; flex-wrap: wrap; justify-content: center; }
+    
+    /* 5. Navigation Badge */
+    .return-badge { top: 20px; left: 20px; font-size: 0.7rem; }
+}
+
+/* --- SMALL PHONES --- */
+@media (max-width: 480px) {
+    .demo-title { font-size: 1.8rem !important; }
+    .brand-logo { margin-bottom: 40px; }
+    .proof-number { font-size: 2rem; }
+    .content-side { padding: 80px 6% 40px; }
+}

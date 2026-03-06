@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Beverly Hub | Digital Asset Demo</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. CORE RESET & LIGHT LUXURY THEME
+           ========================================= */
+        :root { 
+            --gold: #b08436; /* Deepened slightly for better contrast on white */
+            --bg-white: #ffffff; 
+            --bg-offwhite: #f9f9f9;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: var(--bg-white); 
+            color: var(--text-main); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* =========================================
+           2. NAVIGATION BAR (Over Hero Image)
+           ========================================= */
+        nav { 
+            position: absolute; 
+            top: 0; width: 100%; padding: 40px 6%; 
+            display: flex; justify-content: space-between; align-items: center; 
+            z-index: 10; 
+        }
+        
+        .logo { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase;
+            color: #ffffff; /* Stays white over the dark image overlay */
+        }
+        .logo span { color: var(--gold); }
+        
+        .back-link { 
+            color: #ffffff; text-decoration: none; font-size: 0.8rem; 
+            letter-spacing: 2px; border: 1px solid rgba(255, 255, 255, 0.4); 
+            padding: 10px 20px; border-radius: 4px; transition: var(--transition); 
+        }
+        .back-link:hover { background: #ffffff; color: #000; }
+
+        /* =========================================
+           3. CINEMATIC HERO SECTION
+           ========================================= */
+        .hero { 
+            position: relative; height: 100vh; display: flex; 
+            align-items: center; padding: 0 6%; overflow: hidden; 
+        }
+        
+        .hero-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; z-index: 1; filter: brightness(0.65); /* Lighter filter for a brighter feel */
+        }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 1000px; color: #ffffff; }
+        
+        .tagline { 
+            color: var(--gold); letter-spacing: 4px; font-size: 0.8rem; 
+            margin-bottom: 20px; display: block; text-transform: uppercase; font-weight: 600;
+        }
+        
+        h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: clamp(3.5rem, 8vw, 6rem); 
+            line-height: 1.1; margin-bottom: 40px; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 em { font-style: italic; font-weight: 400; color: var(--gold); }
+
+        /* Expanded Specs for more context */
+        .specs { 
+            display: flex; gap: 40px; flex-wrap: wrap;
+            border-top: 1px solid rgba(255,255,255,0.3); padding-top: 30px; 
+        }
+        
+        .spec-item span { 
+            display: block; font-size: 0.7rem; color: #e0e0e0; 
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; 
+        }
+        .spec-item p { font-size: 1.4rem; font-weight: 600; }
+
+        /* =========================================
+           4. NARRATIVE & CONTEXT SECTION
+           ========================================= */
+        .narrative { padding: 150px 8%; background: var(--bg-white); }
+        
+        .narrative-container { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; 
+            align-items: center; max-width: 1400px; margin: 0 auto;
+        }
+        
+        .narrative-text h2 { 
+            font-family: 'Playfair Display', serif; font-size: 3.5rem; 
+            line-height: 1.1; margin-bottom: 30px; color: var(--text-main);
+        }
+        .narrative-text h2 em { color: var(--gold); font-style: italic; }
+        
+        .narrative-text p { 
+            color: var(--text-muted); line-height: 1.8; font-size: 1.1rem; margin-bottom: 40px;
+        }
+
+        /* New Robust Property Details List */
+        .detail-list {
+            list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+        }
+        .detail-list li {
+            font-size: 0.95rem; color: var(--text-main); font-weight: 500;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .detail-list li::before {
+            content: ''; display: inline-block; width: 6px; height: 6px; 
+            background: var(--gold); border-radius: 50%;
+        }
+        
+        .narrative-image img { width: 100%; border-radius: 4px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+
+        /* =========================================
+           5. GALLERY SECTION
+           ========================================= */
+        .gallery-section { padding: 100px 8%; background: var(--bg-offwhite); }
+        
+        .gallery-grid { 
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; 
+            max-width: 1400px; margin: 0 auto;
+        }
+        
+        .gallery-item { position: relative; overflow: hidden; height: 450px; border-radius: 4px; }
+        .gallery-item.large { grid-column: span 2; height: 650px; }
+        
+        .gallery-item img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: transform 1.2s cubic-bezier(0.2, 1, 0.3, 1); 
+        }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* =========================================
+           6. FEATURES GRID
+           ========================================= */
+        .features-section { padding: 150px 8% 250px; background: var(--bg-white); }
+        
+        .features-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 40px; max-width: 1400px; margin: 0 auto;
+        }
+        
+        .feature-item { 
+            padding: 60px 40px; background: #ffffff; 
+            border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            text-align: center; transition: var(--transition); border-radius: 8px;
+        }
+        
+        .feature-item:hover { 
+            transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); 
+            border-color: rgba(176, 132, 54, 0.3);
+        }
+        
+        .feature-item h3 { 
+            font-family: 'Playfair Display', serif; font-size: 1.5rem; 
+            margin: 25px 0 15px; color: var(--text-main);
+        }
+        .feature-item p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+        /* =========================================
+           7. STICKY BAR & MODAL SYSTEM (LIGHT UI)
+           ========================================= */
+        .sticky-bar { 
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); 
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.08); padding: 15px 40px; border-radius: 100px; 
+            display: flex; align-items: center; gap: 40px; z-index: 100; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+        }
+        
+        .sticky-price { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--text-main); font-weight: 600;}
+        
+        .inquire-btn { 
+            background: var(--text-main); color: #ffffff; border: none; 
+            padding: 15px 30px; border-radius: 50px; font-weight: 600; 
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; 
+            font-size: 0.8rem; transition: var(--transition); 
+        }
+        .inquire-btn:hover { background: var(--gold); transform: translateY(-2px); }
+
+        /* Light Modal Architecture */
+        .modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); 
+            z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; 
+        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.4s ease; }
+        
+        .modal-content { 
+            background: #ffffff; padding: 60px 50px; width: 100%; max-width: 500px; 
+            border-radius: 12px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .close-modal { 
+            position: absolute; top: 20px; right: 25px; 
+            background: none; border: none; color: var(--text-main); font-size: 2rem; 
+            cursor: pointer; transition: 0.3s;
+        }
+        .close-modal:hover { color: var(--gold); }
+
+        /* Light Form Elements */
+        .input-group { position: relative; margin-bottom: 40px; }
+        .input-group input { 
+            width: 100%; padding: 12px 0; background: transparent; border: none; 
+            border-bottom: 1px solid rgba(0,0,0,0.2); color: var(--text-main); outline: none; font-size: 1rem;
+        }
+        .input-group label { 
+            position: absolute; top: 12px; left: 0; color: var(--text-muted); 
+            text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; 
+            transition: 0.3s; pointer-events: none; 
+        }
+        .input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label { 
+            top: -15px; font-size: 0.65rem; color: var(--gold); 
+        }
+        
+        .was-validated input:invalid { border-bottom-color: #ff5f56 !important; }
+        
+        .submit-btn { 
+            width: 100%; padding: 20px; background: var(--text-main); color: #ffffff; 
+            border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; 
+            cursor: pointer; transition: 0.3s; font-size: 0.9rem; border-radius: 4px;
+        }
+        .submit-btn:hover { background: var(--gold); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); } }
+
+        /* =========================================
+           8. THE RESPONSIVE MOBILE MATRIX
+           ========================================= */
+        @media (max-width: 992px) {
+            .narrative-container { grid-template-columns: 1fr; gap: 60px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-item.large { grid-column: span 1; height: 450px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 30px 5%; }
+            .back-link { padding: 8px 15px; font-size: 0.7rem; }
+            
+            h1 { font-size: 3rem !important; margin-bottom: 30px; }
+            .specs { gap: 20px; justify-content: space-between; flex-wrap: wrap; }
+            .spec-item p { font-size: 1.2rem; }
+
+            .narrative, .gallery-section, .features-section { padding: 80px 5% !important; }
+            .features-section { padding-bottom: 180px !important; } 
+
+            .narrative-text h2 { font-size: 2.5rem; }
+            .narrative-text p { font-size: 1rem; }
+            .detail-list { grid-template-columns: 1fr; } /* Stack details on mobile */
+            
+            .gallery-item, .gallery-item.large { height: 350px; }
+
+            .features-grid { grid-template-columns: 1fr; gap: 25px; }
+            .feature-item { padding: 40px 25px; }
+
+            .sticky-bar {
+                width: 90%; bottom: 25px; padding: 12px 25px;
+                justify-content: space-between; gap: 15px;
+            }
+            .sticky-price { font-size: 1.2rem; }
+            .inquire-btn { padding: 12px 20px; font-size: 0.7rem; }
+
+            .modal-content { padding: 40px 30px; }
+            .input-group { margin-bottom: 30px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5rem !important; }
+            .sticky-bar { width: 94%; padding: 10px 15px; }
+            .sticky-price { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">BEVERLY <span>HUB.</span></div>
+        <a href="index.html" class="back-link">EXIT DEMO</a>
+    </nav>
+
+    <section class="hero">
+        <img src="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1920" class="hero-bg" alt="Luxury Estate Exterior">
+        <div class="hero-content">
+            <span class="tagline">EXCLUSIVE LISTING</span>
+            <h1>The <em>Shadow</em> Estate.</h1>
+            
+            <div class="specs">
+                <div class="spec-item"><span>Bedrooms</span><p>05</p></div>
+                <div class="spec-item"><span>Bathrooms</span><p>07</p></div>
+                <div class="spec-item"><span>Interior</span><p>8,200 SQFT</p></div>
+                <div class="spec-item"><span>Lot Size</span><p>2.4 Acres</p></div>
+                <div class="spec-item"><span>Year Built</span><p>2025</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="narrative">
+        <div class="narrative-container">
+            <div class="narrative-text">
+                <span class="tagline">THE VISION</span>
+                <h2>Where Modernity Meets <em>Nature.</em></h2>
+                <p>Designed by award-winning architects, The Shadow Estate is a masterclass in light and space. Floor-to-ceiling glass walls dissolve boundaries, creating a seamless flow between the interior sanctuary and the raw beauty of the exterior landscape.</p>
+                
+                <ul class="detail-list">
+                    <li>Infinity-Edge Quartz Pool</li>
+                    <li>6-Car Subterranean Gallery</li>
+                    <li>Private Helipad Access</li>
+                    <li>Imported Italian Marble Floors</li>
+                    <li>Chef’s Kitchen with Gaggenau</li>
+                    <li>Integrated Solar Roof System</li>
+                </ul>
+            </div>
+            <div class="narrative-image">
+                <img src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Estate Architectural Detail">
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <div class="gallery-item large"><img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1260" alt="Main Living Area"></div>
+            <div class="gallery-item"><img src="https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Kitchen Space"></div>
+            <div class="gallery-item"><img src="https://images.pexels.com/photos/1454806/pexels-photo-1454806.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Master Suite"></div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" width="36" height="36" stroke="var(--gold)" fill="none" stroke-width="1.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <h3>Private Cinema</h3>
+                <p>12-seat acoustic room with 8K projection and immersive Dolby Atmos audio engineering.</p>
+            </div>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" width="36" height="36" stroke="var(--gold)" fill="none" stroke-width="1.5"><path d="M12 2v20m10-10H2"/></svg>
+                <h3>Smart Ecosystem</h3>
+                <p>Full-home Savant automation controlling climate, architectural lighting, and biometric security.</p>
+            </div>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" width="36" height="36" stroke="var(--gold)" fill="none" stroke-width="1.5"><path d="M20 7h-9m3 4H5m4 4h10"/></svg>
+                <h3>Climate Vault</h3>
+                <p>Biometrically secured, temperature-controlled glass entry wine cellar for 1,200 bottles.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="sticky-bar">
+        <div class="sticky-price">$12,500,000</div>
+        <button class="inquire-btn">Schedule Private Tour</button>
+    </div>
+
+    <div id="booking-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div id="modal-form-container">
+                <span class="tagline">PRIVATE VIEWING</span>
+                <h2 style="font-family:'Playfair Display'; margin: 10px 0 35px; font-size: 2.2rem; color: var(--text-main);">Request <em>Briefing.</em></h2>
+                
+                <form id="property-inquiry" novalidate>
+                    <div class="input-group">
+                        <input type="text" required placeholder=" ">
+                        <label>Full Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" required placeholder=" ">
+                        <label>Email Address</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" pattern="\d{11}" maxlength="11" required placeholder=" " oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                        <label>Phone (11 Digits)</label>
+                    </div>
+                    <button type="submit" class="submit-btn" id="prop-submit">Verify Availability &rarr;</button>
+                </form>
+            </div>
+            
+            <div id="prop-success" style="display: none; text-align: center; padding: 40px 0;">
+                <svg viewBox="0 0 24 24" width="60" height="60" stroke="var(--gold)" fill="none" stroke-width="1.5" style="margin-bottom: 20px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <h2 style="font-family:'Playfair Display'; color: var(--text-main); font-size: 2.5rem;">Confirmed.</h2>
+                <p style="color: var(--text-muted); margin-top: 15px; line-height: 1.6;">Your private walkthrough request has been securely routed. Our concierge will contact you shortly.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('booking-modal');
+            const trigger = document.querySelector('.inquire-btn');
+            const closeBtn = document.querySelector('.close-modal');
+            const propForm = document.getElementById('property-inquiry');
+            const propSubmit = document.getElementById('prop-submit');
+
+            // Modal Toggles
+            const openModal = () => { 
+                modal.classList.add('active'); 
+                document.body.style.overflow = 'hidden'; 
+            };
+            const closeModal = () => { 
+                modal.classList.remove('active'); 
+                document.body.style.overflow = 'auto'; 
+                
+                // Reset form
+                setTimeout(() => {
+                    propForm.classList.remove('was-validated');
+                    propForm.reset();
+                    document.getElementById('modal-form-container').style.display = 'block';
+                    document.getElementById('prop-success').style.display = 'none';
+                    propSubmit.innerHTML = "Verify Availability &rarr;";
+                }, 400);
+            };
+
+            trigger.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            window.addEventListener('click', (e) => { 
+                if (e.target === modal) closeModal(); 
+            });
+
+            // Form Logic
+            if (propForm) {
+                propForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    propForm.classList.add('was-validated');
+                    
+                    if (!propForm.checkValidity()) {
+                        propSubmit.classList.add('shake');
+                        setTimeout(() => propSubmit.classList.remove('shake'), 400);
+                        return;
+                    }
+                    
+                    propSubmit.innerHTML = "Verifying...";
+                    propSubmit.style.pointerEvents = 'none';
+                    
+                    setTimeout(() => {
+                        document.getElementById('modal-form-container').style.display = 'none';
+                        document.getElementById('prop-success').style.display = 'block';
+                        propSubmit.style.pointerEvents = 'auto';
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
