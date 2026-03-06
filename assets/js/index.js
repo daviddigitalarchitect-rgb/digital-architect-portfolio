@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 try {
                     // NOTE: Change this URL to your live backend URL when deploying!
                     // Strictly point to Port 5001 using the IPv4 address
-                    const apiUrl = 'http://127.0.0.1:5001/api/contact';
+                    const apiUrl = '/api/contact';
 
                     const response = await fetch(apiUrl, {
                         method: 'POST',
