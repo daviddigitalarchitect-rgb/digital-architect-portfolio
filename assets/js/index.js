@@ -193,21 +193,52 @@ document.addEventListener('DOMContentLoaded', () => {
     if (leadForm) {
         const btnTextDisplay = document.getElementById('btn-text-display');
         const btnIconDisplay = document.getElementById('btn-icon-display');
+        const magBtn = document.querySelector('.magnetic-btn');
 
         leadForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); 
+            e.preventDefault(); // This officially stops the page from reloading!
             
-            const nameVal = document.getElementById('nl-name')?.value;
-            const emailVal = document.getElementById('nl-email')?.value;
-            const projectVal = hiddenInput?.value || displayInput?.value;
+            const nameInput = document.getElementById('nl-name');
+            const emailInput = document.getElementById('nl-email');
+            
+            // Safely grab the values
+            const nameVal = nameInput ? nameInput.value.trim() : '';
+            const emailVal = emailInput ? emailInput.value.trim() : '';
+            
+            // Grab the dropdown project value securely
+            const hiddenProjectInput = document.getElementById('nl-project-hidden');
+            const displayProjectInput = document.getElementById('nl-project-display');
+            const projectVal = (hiddenProjectInput && hiddenProjectInput.value) ? hiddenProjectInput.value : (displayProjectInput ? displayProjectInput.value : 'digital estate');
 
-            if (nameVal && emailVal && projectVal && magBtn) {
+            // 1. Reset any previous error styling
+            if (nameInput) nameInput.classList.remove('error-state');
+            if (emailInput) emailInput.classList.remove('error-state');
+
+            // 2. Custom Empty Field Check
+            if (!nameVal || !emailVal) {
+                if (!nameVal && nameInput) nameInput.classList.add('error-state');
+                if (!emailVal && emailInput) emailInput.classList.add('error-state');
+
+                if (btnTextDisplay && magBtn) {
+                    const originalText = btnTextDisplay.textContent;
+                    btnTextDisplay.textContent = 'Missing Details';
+                    magBtn.classList.add('shake-error');
+
+                    // Reset the button after 2 seconds
+                    setTimeout(() => {
+                        btnTextDisplay.textContent = originalText;
+                        magBtn.classList.remove('shake-error');
+                    }, 2000);
+                }
+                return; // Stop the code here so it doesn't try to route to the server
+            }
+
+            // 3. Server Routing (If everything is filled out)
+            if (magBtn && btnTextDisplay) {
                 btnTextDisplay.textContent = 'Routing...';
                 magBtn.style.pointerEvents = 'none'; 
                 
                 try {
-                    // NOTE: Change this URL to your live backend URL when deploying!
-                    // Strictly point to Port 5001 using the IPv4 address
                     const apiUrl = '/api/contact';
 
                     const response = await fetch(apiUrl, {
@@ -217,17 +248,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
 
                     if (response.ok) {
-                        // 1. Trigger the Success UI
                         magBtn.classList.add('success-state');
                         btnTextDisplay.textContent = 'Inquiry Secured';
                         if (btnIconDisplay) btnIconDisplay.innerHTML = `<polyline points="20 6 9 17 4 12"></polyline>`;
                         magBtn.style.transform = 'translate(0px, 0px)';
 
-                        // 2. Wait 2.5 seconds, then reload the page fresh
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 2500);
-                        
+                        setTimeout(() => { window.location.reload(); }, 2500);
                     } else {
                         throw new Error('Server rejected request');
                     }
@@ -239,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
 
     // --- 11. Page Transitions ---
     const pageLinks = document.querySelectorAll('.sr-link');
