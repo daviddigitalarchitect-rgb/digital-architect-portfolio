@@ -190,8 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 10. Node.js Form Submission ---
-    // --- Live Error Reset ---
+   // --- 10. Node.js Form Submission ---
+    
+    // 1. Live Error Reset (Watches for typing/clicks)
     const inputsToWatch = [
         document.getElementById('nl-name'),
         document.getElementById('nl-email'),
@@ -201,12 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
     inputsToWatch.forEach(input => {
         if (input) {
             input.addEventListener('input', () => {
-                if (input.value.trim() !== "") {
-                    input.classList.remove('error-state');
-                }
+                if (input.value.trim() !== "") input.classList.remove('error-state');
             });
         }
     });
+
+    // 2. Main Form Logic
     const leadForm = document.getElementById('lead-generation-form');
     if (leadForm) {
         const btnTextDisplay = document.getElementById('btn-text-display');
@@ -214,60 +215,54 @@ document.addEventListener('DOMContentLoaded', () => {
         const magBtn = document.querySelector('.magnetic-btn');
 
         leadForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // This officially stops the page from reloading!
+            e.preventDefault(); // Kills the default page reload
             
             const nameInput = document.getElementById('nl-name');
             const emailInput = document.getElementById('nl-email');
-            
-            // Safely grab the values
+            const displayProjectInput = document.getElementById('nl-project-display');
+            const hiddenProjectInput = document.getElementById('nl-project-hidden');
+
             const nameVal = nameInput ? nameInput.value.trim() : '';
             const emailVal = emailInput ? emailInput.value.trim() : '';
-            
-            // STRICT PROJECT VALIDATION: No more fallback value. They MUST select something.
-            const hiddenProjectInput = document.getElementById('nl-project-hidden');
-            const displayProjectInput = document.getElementById('nl-project-display');
             const projectVal = (hiddenProjectInput && hiddenProjectInput.value.trim()) ? hiddenProjectInput.value.trim() : (displayProjectInput ? displayProjectInput.value.trim() : '');
 
-            // 1. Reset any previous error styling
-            if (nameInput) nameInput.classList.remove('error-state');
-            if (emailInput) emailInput.classList.remove('error-state');
-            if (displayProjectInput) displayProjectInput.classList.remove('error-state');
+            // Clean the slate: remove red lines before checking again
+            [nameInput, emailInput, displayProjectInput].forEach(el => {
+                if (el) el.classList.remove('error-state');
+            });
 
-            // 1. Regex to verify proper email format (e.g., name@gmail.com)
+            // Strict Regex for Email (Must have text + @ + text + . + text)
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isEmailValid = emailRegex.test(emailVal);
 
-            // 2. Reset any previous error styling
-            if (nameInput) nameInput.classList.remove('error-state');
-            if (emailInput) emailInput.classList.remove('error-state');
-            if (displayProjectInput) displayProjectInput.classList.remove('error-state');
-
-            // 3. Strict Validation (Checks for empty fields AND valid email format)
+            // THE GATEKEEPER: If anything is missing or invalid, stop everything.
             if (!nameVal || !emailVal || !projectVal || !isEmailValid) {
+                
+                // Light up the specific errors
                 if (!nameVal && nameInput) nameInput.classList.add('error-state');
                 if (!projectVal && displayProjectInput) displayProjectInput.classList.add('error-state');
                 
-                // Trigger red error if email is empty OR if it's missing @ or .com
+                // Turn email red if it's completely empty OR typed wrong
                 if ((!emailVal || !isEmailValid) && emailInput) {
                     emailInput.classList.add('error-state');
                 }
 
+                // Shake the button and tell them why
                 if (btnTextDisplay && magBtn) {
-                    const originalText = btnTextDisplay.textContent;
-                    
-                    // Show a specific message if the email is just typed wrong
-                    btnTextDisplay.textContent = !isEmailValid && emailVal ? 'Invalid Email' : 'Missing Details';
+                    btnTextDisplay.textContent = (!isEmailValid && emailVal) ? 'Invalid Email' : 'Missing Details';
                     magBtn.classList.add('shake-error');
 
+                    // Reset button text strictly to "Send Inquiry" after 2s
                     setTimeout(() => {
-                        btnTextDisplay.textContent = originalText;
+                        btnTextDisplay.textContent = 'Send Inquiry';
                         magBtn.classList.remove('shake-error');
                     }, 2000);
                 }
-                return; // STOP: Don't let the form send
+                
+                return; // 🛑 ABSOLUTE STOP: Prevents the fetch command from running!
             }
 
-            // 3. Server Routing (If everything is filled out)
+            // 3. Server Routing (Only runs if the gatekeeper passes)
             if (magBtn && btnTextDisplay) {
                 btnTextDisplay.textContent = 'Routing...';
                 magBtn.style.pointerEvents = 'none'; 
@@ -286,14 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         btnTextDisplay.textContent = 'Inquiry Secured';
                         if (btnIconDisplay) btnIconDisplay.innerHTML = `<polyline points="20 6 9 17 4 12"></polyline>`;
                         magBtn.style.transform = 'translate(0px, 0px)';
-
                         setTimeout(() => { window.location.reload(); }, 2500);
                     } else {
                         throw new Error('Server rejected request');
                     }
                 } catch (error) {
                     console.error("Fetch failed:", error);
-                    btnTextDisplay.textContent = 'Failed. Try Again.';
+                    btnTextDisplay.textContent = 'FAILED. TRY AGAIN.';
                     magBtn.style.pointerEvents = 'auto';
                 }
             }
