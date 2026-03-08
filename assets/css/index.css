@@ -464,6 +464,181 @@ body.light-mode .sr-link:hover {
 
 
 
+
+
+/* =========================================
+   WORK WITH ME - PARALLAX & CARDS
+   ========================================= */
+
+/* --- 1. Parallax Background & Overlay --- */
+.parallax-work-wrapper {
+    position: relative;
+    /* Put a cool tech/architecture image in your img folder */
+    background-image: url('../img/work-bg.jpg'); 
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 100px 20px;
+    text-align: center;
+    color: #fff;
+    z-index: 1;
+}
+
+/* Dark Glass Overlay (Default) */
+.parallax-work-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 10, 10, 0.88); /* Deep tint so text pops */
+    z-index: -1;
+}
+
+/* Ensure content sits above the glass */
+.work-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* --- 2. Typography --- */
+.work-title {
+    color: #9e7d3e;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.work-subtitle {
+    color: #888;
+    margin: 0 auto 50px auto;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* --- 3. Card Container & Glassmorphism --- */
+.work-cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.work-card {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 380px;
+    text-align: left;
+    /* Frosted Glass Effect */
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.work-card:hover {
+    transform: translateY(-5px);
+    border-color: #9e7d3e;
+}
+
+.work-card h3 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.work-card p {
+    color: #aaa;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+/* --- 4. Premium Buttons --- */
+.work-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid #9e7d3e;
+    color: #9e7d3e;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.work-btn:hover {
+    background: #9e7d3e;
+    color: #0a0a0a;
+}
+
+
+/* =========================================
+   LIGHT MODE OVERRIDES
+   ========================================= */
+body.light-mode .parallax-work-wrapper::before {
+    background: rgba(245, 245, 245, 0.90); /* White glass overlay */
+}
+
+body.light-mode .work-title {
+    color: #b89047; /* Slightly darker gold for readability */
+}
+
+body.light-mode .work-subtitle {
+    color: #555;
+}
+
+body.light-mode .work-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .work-card h3 {
+    color: #111;
+}
+
+body.light-mode .work-card p {
+    color: #444;
+}
+
+body.light-mode .work-btn:hover {
+    color: #fff;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
+@media (max-width: 768px) {
+    .parallax-work-wrapper {
+        padding: 70px 15px;
+        /* iOS mobile struggles with fixed parallax, this ensures it looks perfect on phones */
+        background-attachment: scroll; 
+    }
+
+    .work-title {
+        font-size: 2rem;
+    }
+
+    .work-cards-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .work-card {
+        padding: 30px;
+    }
+}
+
+
+
+
+
+
 /* =========================================
    12. NATURAL LANGUAGE FORM
    ========================================= */
