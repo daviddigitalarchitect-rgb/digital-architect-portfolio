@@ -233,24 +233,38 @@ document.addEventListener('DOMContentLoaded', () => {
             if (emailInput) emailInput.classList.remove('error-state');
             if (displayProjectInput) displayProjectInput.classList.remove('error-state');
 
-            // 2. Strict Empty Field Check (Now includes the dropdown!)
-            if (!nameVal || !emailVal || !projectVal) {
+            // 1. Regex to verify proper email format (e.g., name@gmail.com)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isEmailValid = emailRegex.test(emailVal);
+
+            // 2. Reset any previous error styling
+            if (nameInput) nameInput.classList.remove('error-state');
+            if (emailInput) emailInput.classList.remove('error-state');
+            if (displayProjectInput) displayProjectInput.classList.remove('error-state');
+
+            // 3. Strict Validation (Checks for empty fields AND valid email format)
+            if (!nameVal || !emailVal || !projectVal || !isEmailValid) {
                 if (!nameVal && nameInput) nameInput.classList.add('error-state');
-                if (!emailVal && emailInput) emailInput.classList.add('error-state');
                 if (!projectVal && displayProjectInput) displayProjectInput.classList.add('error-state');
+                
+                // Trigger red error if email is empty OR if it's missing @ or .com
+                if ((!emailVal || !isEmailValid) && emailInput) {
+                    emailInput.classList.add('error-state');
+                }
 
                 if (btnTextDisplay && magBtn) {
                     const originalText = btnTextDisplay.textContent;
-                    btnTextDisplay.textContent = 'Missing Details';
+                    
+                    // Show a specific message if the email is just typed wrong
+                    btnTextDisplay.textContent = !isEmailValid && emailVal ? 'Invalid Email' : 'Missing Details';
                     magBtn.classList.add('shake-error');
 
-                    // Reset the button after 2 seconds
                     setTimeout(() => {
                         btnTextDisplay.textContent = originalText;
                         magBtn.classList.remove('shake-error');
                     }, 2000);
                 }
-                return; // Stop the code here so it doesn't send a blank project!
+                return; // STOP: Don't let the form send
             }
 
             // 3. Server Routing (If everything is filled out)
