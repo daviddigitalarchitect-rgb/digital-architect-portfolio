@@ -474,7 +474,7 @@ body.light-mode .sr-link:hover {
 .parallax-work-wrapper {
     position: relative;
     /* Put a cool tech/architecture image in your img folder */
-    background-image: url('../img/work-bg.jpg'); 
+    background-image: url('../img/mansions.jpg'); 
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
