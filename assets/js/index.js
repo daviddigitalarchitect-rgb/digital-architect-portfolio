@@ -158,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayInput.value = opt.textContent;
                 hiddenInput.value = opt.getAttribute('data-value') || opt.textContent;
                 dropdown.classList.remove('open');
+
+                displayInput.classList.remove('error-state');
             });
         });
 
@@ -189,6 +191,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 10. Node.js Form Submission ---
+    // --- Live Error Reset ---
+    const inputsToWatch = [
+        document.getElementById('nl-name'),
+        document.getElementById('nl-email'),
+        document.getElementById('nl-project-display')
+    ];
+
+    inputsToWatch.forEach(input => {
+        if (input) {
+            input.addEventListener('input', () => {
+                if (input.value.trim() !== "") {
+                    input.classList.remove('error-state');
+                }
+            });
+        }
+    });
     const leadForm = document.getElementById('lead-generation-form');
     if (leadForm) {
         const btnTextDisplay = document.getElementById('btn-text-display');
@@ -205,19 +223,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const nameVal = nameInput ? nameInput.value.trim() : '';
             const emailVal = emailInput ? emailInput.value.trim() : '';
             
-            // Grab the dropdown project value securely
+            // STRICT PROJECT VALIDATION: No more fallback value. They MUST select something.
             const hiddenProjectInput = document.getElementById('nl-project-hidden');
             const displayProjectInput = document.getElementById('nl-project-display');
-            const projectVal = (hiddenProjectInput && hiddenProjectInput.value) ? hiddenProjectInput.value : (displayProjectInput ? displayProjectInput.value : 'digital estate');
+            const projectVal = (hiddenProjectInput && hiddenProjectInput.value.trim()) ? hiddenProjectInput.value.trim() : (displayProjectInput ? displayProjectInput.value.trim() : '');
 
             // 1. Reset any previous error styling
             if (nameInput) nameInput.classList.remove('error-state');
             if (emailInput) emailInput.classList.remove('error-state');
+            if (displayProjectInput) displayProjectInput.classList.remove('error-state');
 
-            // 2. Custom Empty Field Check
-            if (!nameVal || !emailVal) {
+            // 2. Strict Empty Field Check (Now includes the dropdown!)
+            if (!nameVal || !emailVal || !projectVal) {
                 if (!nameVal && nameInput) nameInput.classList.add('error-state');
                 if (!emailVal && emailInput) emailInput.classList.add('error-state');
+                if (!projectVal && displayProjectInput) displayProjectInput.classList.add('error-state');
 
                 if (btnTextDisplay && magBtn) {
                     const originalText = btnTextDisplay.textContent;
@@ -230,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         magBtn.classList.remove('shake-error');
                     }, 2000);
                 }
-                return; // Stop the code here so it doesn't try to route to the server
+                return; // Stop the code here so it doesn't send a blank project!
             }
 
             // 3. Server Routing (If everything is filled out)

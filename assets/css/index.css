@@ -496,12 +496,14 @@ body.light-mode .sr-link:hover {
 
 
 /* --- Premium Form Error States --- */
-.input-wrapper input.error-state {
+.input-wrapper input.error-state,
+.dropdown-trigger input.error-state {
     color: #ff3333 !important;
     border-bottom-color: #ff3333 !important;
 }
 
-.input-wrapper input.error-state::placeholder {
+.input-wrapper input.error-state::placeholder,
+.dropdown-trigger input.error-state::placeholder {
     color: rgba(255, 51, 51, 0.5) !important;
 }
 
