@@ -104,7 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Parallax safety check
         if (heroContent) {
             heroContent.style.transform = `translateY(${scroll * 0.4}px)`;
-            heroContent.style.opacity = 1 - (scroll / 700);
+            // Only fade out if they actually scrolled down significantly
+            if (scroll > 10) {
+                 heroContent.style.opacity = 1 - (scroll / 700);
+            } else {
+                 heroContent.style.opacity = 1; // Force 100% visibility at the top
+            }
         }
     });
 
@@ -257,3 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('pageshow', (e) => {
     if (e.persisted) document.body.style.opacity = '1';
 });
+
+// Force browser to remember scroll position on back button
+if ('scrollRestoration' in history) { history.scrollRestoration = 'auto'; }
