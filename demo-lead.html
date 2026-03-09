@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Elite Lead-Gen Demo | The Digital Estate</title>
-    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@21.1.1/build/css/intlTelInput.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
@@ -171,6 +171,94 @@
         #success-message h2 { font-family: 'Playfair Display'; font-size: 3rem; margin-bottom: 10px; }
         #success-message h2 em { color: var(--gold); font-style: italic; }
 
+
+
+
+
+        /* --- PREMIUM INTL-TEL-INPUT CUSTOMIZATION --- */
+        .iti { width: 100%; }
+
+        /* Make the input field seamless */
+        .iti input {
+            background: transparent !important;
+            border: none !important;
+            border-bottom: 1px solid var(--border-light) !important;
+            padding: 15px 0 15px 95px !important; /* Makes room for the flag/code */
+            font-family: 'Inter', sans-serif !important;
+            color: var(--text-main) !important;
+            border-radius: 0 !important;
+            transition: border-color 0.3s ease !important;
+            box-shadow: none !important;
+        }
+
+        .iti input:focus {
+            border-bottom-color: var(--text-main) !important;
+        }
+
+        /* Style the selected flag area & Dial Code */
+        .iti__flag-container { padding: 0; }
+        .iti__selected-flag { background: transparent !important; padding: 0 10px 0 0 !important; }
+
+        .iti__selected-dial-code {
+            color: var(--gold); /* Gives the dial code that luxury gold accent */
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        /* --- THE FIX: Floating Label Logic for Phone --- */
+        .phone-group label {
+            left: 95px; /* Starts the label AFTER the flag */
+            z-index: 2;
+        }
+
+        /* Modern CSS to float the label up when focused or typing */
+        .input-group:focus-within label,
+        .input-group:has(input:not(:placeholder-shown)) label {
+            top: -10px !important;
+            left: 0 !important; /* Snaps back to the left when floating */
+            font-size: 0.75rem !important;
+            color: var(--text-main) !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
+            font-weight: 600 !important;
+        }
+
+        /* --- Expensive Dropdown Menu --- */
+        .iti__country-list {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .iti__country { padding: 12px 15px; color: var(--text-main); transition: var(--transition); }
+        .iti__country:hover, .iti__country.iti__highlight { background-color: var(--bg-offwhite); color: var(--gold); }
+
+
+        /* --- PREMIUM SEARCH BAR --- */
+        .iti__search-input {
+            background: transparent !important;
+            color: var(--text-main) !important;
+            border: 1px solid var(--border-light) !important;
+            border-radius: 4px !important;
+            padding: 10px !important;
+            margin: 10px auto !important;
+            width: 90% !important;
+            display: block !important;
+            font-family: 'Inter', sans-serif !important;
+            box-shadow: none !important;
+            outline: none !important;
+            transition: var(--transition);
+        }
+        .iti__search-input:focus {
+            border-color: var(--gold) !important;
+        }
+
         /* --- 6. TRUST, PROCESS & TESTIMONIALS --- */
         .trust-bar { 
             background: var(--bg-offwhite); padding: 40px 0; 
@@ -284,10 +372,10 @@
                             <span class="error-tip">Valid email required</span>
                         </div>
 
-                        <div class="input-group">
-                            <input type="tel" id="phone" pattern="\d{11}" maxlength="11" required placeholder=" " oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                            <label for="phone">Phone (11 Digits)</label>
-                            <span class="error-tip">11 digits required</span>
+                        <div class="input-group phone-group">
+                            <input type="tel" id="phone" required placeholder=" ">
+                            <label for="phone">Phone Number</label>
+                            <span class="error-tip">Valid phone required</span>
                         </div>
 
                         <button type="submit" class="submit-btn" id="submit-action">Request Access &rarr;</button>
@@ -367,7 +455,77 @@
         <p>&copy; 2026 [YOUR BROKERAGE]. ALL RIGHTS RESERVED. | ARCHITECTED BY DAVID OLAWALE</p>
     </footer>
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@21.1.1/build/js/intlTelInput.min.js"></script>
+
     <script>
+        // Initialize the global phone input
+        const phoneInputField = document.querySelector("#phone");
+        const phoneInputPlugin = window.intlTelInput(phoneInputField, {
+            initialCountry: "ng",
+            separateDialCode: true,
+            countrySearch: true, // Keeps the premium search bar
+            strictMode: true, // Natively blocks typing past max length
+            autoPlaceholder: "off", // Protects your custom floating label CSS
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.1.1/build/js/utils.js"
+        });
+
+        // --- THE ULTIMATE DYNAMIC MAXLENGTH HACK (FIXED) ---
+        function applySmartCap() {
+            if (window.intlTelInputUtils) {
+                const countryData = phoneInputPlugin.getSelectedCountryData();
+                
+                // 1. Ask the brain for the INTERNATIONAL example (e.g., "+234 803 123 4567")
+                // Setting that second parameter to 'false' forces the international layout
+                const exampleNumber = window.intlTelInputUtils.getExampleNumber(countryData.iso2, false, 1) || "";
+                
+                // 2. Clean it to just the raw numbers (e.g., "2348031234567")
+                const fullDigits = exampleNumber.replace(/[^0-9]/g, '');
+                
+                // 3. Subtract the country code length from the total length
+                // For Nigeria: 13 total digits - 3 digits for "234" = 10 strictly allowed digits!
+                const exactDigitCount = fullDigits.length - countryData.dialCode.length;
+                
+                if (exactDigitCount > 0) {
+                    phoneInputField.setAttribute("maxlength", exactDigitCount);
+                } else {
+                    phoneInputField.setAttribute("maxlength", "15"); // Safe fallback
+                }
+            }
+        }
+
+        // Keep checking until the brain loads in the background, then lock the length
+        const checkUtilsLoaded = setInterval(() => {
+            if (window.intlTelInputUtils) {
+                applySmartCap();
+                clearInterval(checkUtilsLoaded); // Stop checking once loaded
+            }
+        }, 100);
+
+        // --- FORM VALIDATION & UX ---
+        phoneInputField.addEventListener('input', function() {
+            // Instantly strip letters/symbols
+            this.value = this.value.replace(/[^0-9]/g, '');
+
+            // Handle your custom Red Error Line UI
+            if (this.value.trim() === "") {
+                this.setCustomValidity("Required"); 
+            } else if (phoneInputPlugin.isValidNumber()) {
+                this.setCustomValidity(""); // Valid!
+            } else {
+                this.setCustomValidity("Invalid number"); 
+            }
+        });
+
+        // Luxury UX: Reset field and recalculate max length when changing country
+        phoneInputField.addEventListener("countrychange", function() {
+            this.value = "";
+            this.setCustomValidity("Required"); 
+            applySmartCap(); // Instantly adjusts the max length for the new flag
+        });
+
+        // --- FORM SUBMISSION ---
         const form = document.getElementById('lead-form');
         const submitBtn = document.getElementById('submit-action');
         const contentDiv = document.getElementById('lead-content');

@@ -472,6 +472,17 @@
                         </span>. 
                         <br><em class="closing">Let's build something extraordinary.</em>
                     </h2>
+
+                    <div class="custom-message-box">
+                        <span class="message-prompt">Any specific details or visions?</span>
+                        <textarea 
+                            id="client-message" 
+                            name="message" 
+                            class="nl-message-input" 
+                            placeholder="Type here..." 
+                            rows="1"
+                        ></textarea>
+                    </div>
                     
                     <div class="nl-submit-wrapper">
                         <button type="submit" class="magnetic-btn" id="submit-btn">
@@ -521,6 +532,20 @@
     </footer>
 
     <button id="backToTop">↑</button>
+
+
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-brand">THE DIGITAL ESTATE</div>
+            <h2 class="modal-title">Inquiry <em>Secured.</em></h2>
+            <div class="modal-line"></div>
+            <p class="modal-text">
+                Your vision has been transmitted to our private vault. 
+                Expect a confidential consultation within 24 hours.
+            </p>
+            <button id="close-modal" class="modal-btn">Return to Estate</button>
+        </div>
+    </div>
 
     <script src="assets/js/index.js"></script>
 </body>

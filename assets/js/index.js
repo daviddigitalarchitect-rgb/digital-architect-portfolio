@@ -168,6 +168,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    // --- PREMIUM AUTO-EXPANDING MESSAGE BOX ---
+    const messageInput = document.querySelector('.nl-message-input');
+
+    if (messageInput) {
+        messageInput.addEventListener('input', function() {
+            // Reset the height momentarily to calculate the new exact scroll height
+            this.style.height = 'auto';
+            // Set the new height based on the text inside, capped at whatever looks good
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    }
+
+    const messageArea = document.querySelector('.nl-message-input');
+
+    if (messageArea) {
+        messageArea.addEventListener('input', function() {
+            // This makes the underline stay under the text as it wraps
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    }
+
     // --- 9. Magnetic Button ---
     const submitWrapper = document.querySelector('.nl-submit-wrapper');
     const magBtn = document.querySelector('.magnetic-btn');
@@ -207,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Main Form Logic
+   // 2. Main Form Logic (UPDATED FOR MESSAGE SECTION)
     const leadForm = document.getElementById('lead-generation-form');
     if (leadForm) {
         const btnTextDisplay = document.getElementById('btn-text-display');
@@ -215,54 +238,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const magBtn = document.querySelector('.magnetic-btn');
 
         leadForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Kills the default page reload
+            e.preventDefault(); 
             
             const nameInput = document.getElementById('nl-name');
             const emailInput = document.getElementById('nl-email');
             const displayProjectInput = document.getElementById('nl-project-display');
             const hiddenProjectInput = document.getElementById('nl-project-hidden');
+            const messageInput = document.getElementById('client-message'); // NEW
 
             const nameVal = nameInput ? nameInput.value.trim() : '';
             const emailVal = emailInput ? emailInput.value.trim() : '';
             const projectVal = (hiddenProjectInput && hiddenProjectInput.value.trim()) ? hiddenProjectInput.value.trim() : (displayProjectInput ? displayProjectInput.value.trim() : '');
+            const messageVal = messageInput ? messageInput.value.trim() : ''; // NEW
 
-            // Clean the slate: remove red lines before checking again
+            // Clean the slate
             [nameInput, emailInput, displayProjectInput].forEach(el => {
                 if (el) el.classList.remove('error-state');
             });
 
-            // Strict Regex for Email (Must have text + @ + text + . + text)
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isEmailValid = emailRegex.test(emailVal);
 
-            // THE GATEKEEPER: If anything is missing or invalid, stop everything.
+            // THE GATEKEEPER
             if (!nameVal || !emailVal || !projectVal || !isEmailValid) {
-                
-                // Light up the specific errors
                 if (!nameVal && nameInput) nameInput.classList.add('error-state');
                 if (!projectVal && displayProjectInput) displayProjectInput.classList.add('error-state');
-                
-                // Turn email red if it's completely empty OR typed wrong
-                if ((!emailVal || !isEmailValid) && emailInput) {
-                    emailInput.classList.add('error-state');
-                }
+                if ((!emailVal || !isEmailValid) && emailInput) emailInput.classList.add('error-state');
 
-                // Shake the button and tell them why
                 if (btnTextDisplay && magBtn) {
                     btnTextDisplay.textContent = (!isEmailValid && emailVal) ? 'Invalid Email' : 'Missing Details';
                     magBtn.classList.add('shake-error');
-
-                    // Reset button text strictly to "Send Inquiry" after 2s
                     setTimeout(() => {
                         btnTextDisplay.textContent = 'Send Inquiry';
                         magBtn.classList.remove('shake-error');
                     }, 2000);
                 }
-                
-                return; // 🛑 ABSOLUTE STOP: Prevents the fetch command from running!
+                return; 
             }
 
-            // 3. Server Routing (Only runs if the gatekeeper passes)
+            // 3. Server Routing
             if (magBtn && btnTextDisplay) {
                 btnTextDisplay.textContent = 'Routing...';
                 magBtn.style.pointerEvents = 'none'; 
@@ -273,22 +287,45 @@ document.addEventListener('DOMContentLoaded', () => {
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name: nameVal, email: emailVal, project: projectVal })
+                        body: JSON.stringify({ 
+                            name: nameVal, 
+                            email: emailVal, 
+                            project: projectVal,
+                            message: messageVal 
+                        })
                     });
 
                     if (response.ok) {
+                        // 1. Show success state on the button
                         magBtn.classList.add('success-state');
                         btnTextDisplay.textContent = 'Inquiry Secured';
                         if (btnIconDisplay) btnIconDisplay.innerHTML = `<polyline points="20 6 9 17 4 12"></polyline>`;
                         magBtn.style.transform = 'translate(0px, 0px)';
-                        setTimeout(() => { window.location.reload(); }, 2500);
+                        
+                        // Reset message box height
+                        if (messageInput) messageInput.style.height = 'auto';
+
+                        // 2. Trigger the Exquisite Pop-up
+                        setTimeout(() => {
+                            const modal = document.getElementById('success-modal');
+                            if (modal) {
+                                modal.style.display = 'flex'; // Ensure it's visible
+                                setTimeout(() => modal.classList.add('active'), 10);
+                            }
+                            
+                            // 3. Reset the form silently
+                            leadForm.reset();
+                        }, 1000);
+
                     } else {
                         throw new Error('Server rejected request');
                     }
                 } catch (error) {
+                    // This catches network errors or the "Server rejected" error above
                     console.error("Fetch failed:", error);
                     btnTextDisplay.textContent = 'FAILED. TRY AGAIN.';
                     magBtn.style.pointerEvents = 'auto';
+                    magBtn.classList.remove('success-state'); // Ensure button isn't green if it failed
                 }
             }
         });
@@ -309,6 +346,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => window.location.href = targetUrl, 500);
             }
         });
+    });
+
+
+    // --- CLOSE MODAL LOGIC ---
+    const closeModalBtn = document.getElementById('close-modal');
+    const successModal = document.getElementById('success-modal');
+
+    if (closeModalBtn && successModal) {
+        closeModalBtn.addEventListener('click', () => {
+            successModal.classList.remove('active');
+            
+            setTimeout(() => {
+                successModal.style.display = 'none';
+                
+                const magBtn = document.querySelector('.magnetic-btn');
+                const btnTextDisplay = document.getElementById('btn-text-display');
+                if (magBtn && btnTextDisplay) {
+                    magBtn.classList.remove('success-state');
+                    magBtn.style.pointerEvents = 'auto';
+                    btnTextDisplay.textContent = 'Send Inquiry';
+                }
+            }, 600);
+        });
+    }
+
+
+    // Close modal on 'Esc' key press
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape" && successModal.classList.contains('active')) {
+            closeModalBtn.click();
+        }
     });
 
 });

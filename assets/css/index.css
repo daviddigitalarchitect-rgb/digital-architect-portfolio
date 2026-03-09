@@ -1424,6 +1424,164 @@ body.light-mode .author-area span {
     display: inline-block; 
 }
 
+/* --- PREMIUM INTEGRATED MESSAGE BOX (BLACK PROMPT FIX) --- */
+.custom-message-box {
+    width: 100%;
+    margin: 60px auto; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* The prompt is now Black, bold, and distinct */
+.message-prompt {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.4rem; /* Slightly larger for presence */
+    color: #1a1a1a !important; /* Solid Black */
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+/* The Gold Input Area */
+.nl-message-input {
+    width: 100%;
+    max-width: 750px;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(176, 132, 54, 0.3) !important; 
+    border-radius: 0 !important;
+    padding: 15px 0;
+    
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    color: var(--gold) !important; /* Strictly Gold */
+    caret-color: var(--gold) !important; /* Gold blinking cursor */
+    letter-spacing: 0.5px;
+    
+    text-align: center;
+    resize: none;
+    outline: none;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.nl-message-input:focus {
+    border-bottom: 1px solid var(--gold) !important;
+    text-shadow: 0 0 8px rgba(176, 132, 54, 0.1);
+}
+
+/* Placeholder - Muted Gold */
+.nl-message-input::placeholder {
+    color: var(--gold) !important;
+    opacity: 0.3;
+    text-align: center;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+}
+
+.nl-message-input::-webkit-scrollbar {
+    display: none;
+}
+
+/* Light Mode Sync */
+body.light-mode .message-prompt {
+    color: #000 !important;
+}
+
+
+
+
+
+
+/* --- LUXURY MODAL ARCHITECTURE --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Deep backdrop */
+    backdrop-filter: blur(15px); /* Premium blur */
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: #0a0a0a;
+    border: 1px solid rgba(176, 132, 54, 0.3);
+    padding: 60px 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-brand {
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    color: var(--gold);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.modal-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 30px;
+}
+
+.modal-text {
+    font-family: 'Inter', sans-serif;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    font-size: 1rem;
+}
+
+.modal-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 15px 35px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.modal-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+
+
 .magnetic-btn { 
     display: inline-flex; 
     align-items: center; 
