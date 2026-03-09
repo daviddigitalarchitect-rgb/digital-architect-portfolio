@@ -1298,6 +1298,72 @@ body.light-mode .author-area span {
     color: #888; 
 }
 
+
+
+/* =========================================
+   CLIENT COMMITMENT SECTION - MOBILE MATRIX
+   ========================================= */
+
+/* Tablet View: Tighten the gap before they stack */
+@media (max-width: 992px) {
+    .commitment-cards-container {
+        gap: 30px;
+    }
+}
+
+/* Mobile View: Stack them vertically and adjust inner spacing */
+@media (max-width: 768px) {
+    commitment-cards-container {
+        display: flex; 
+        flex-direction: column;
+        align-items: center; /* Centers the cards in the middle of the screen */
+        width: 100%;
+        gap: 40px; 
+    }
+
+    .commitment-card {
+        width: 100%; /* Forces the card to stretch across the phone screen */
+        max-width: 100%; /* Overrides any fixed desktop widths */
+        margin: 0 auto; /* Ensures perfect centering */
+        padding: 40px 25px; /* Adjusted padding for better breathing room */
+        box-sizing: border-box; /* Stops padding from pushing it off-screen */
+    }
+
+    /* Center the main section title for mobile */
+    .commitment-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .commitment-header h2 {
+        font-size: 2.5rem; /* Scales down "The Architect's Standard" */
+    }
+
+    /* Keep the italic quote readable but not overwhelming on small screens */
+    .commitment-card .quote {
+        font-size: 1.15rem; 
+        line-height: 1.6;
+    }
+}
+
+/* Small Phones (iPhone SE, etc.) */
+@media (max-width: 480px) {
+    .commitment-card {
+        padding: 30px 20px;
+    }
+    
+    .commitment-header h2 {
+        font-size: 2rem;
+    }
+
+    .commitment-card .quote {
+        font-size: 1.1rem;
+    }
+}
+
+
+
+
 /* =========================================
    13. NATURAL LANGUAGE FORM
    ========================================= */

@@ -7,12 +7,14 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@21.2.7/build/css/intlTelInput.css">
+    
     <style>
         /* =========================================
            1. CORE RESET & LIGHT LUXURY THEME
            ========================================= */
         :root { 
-            --gold: #b08436; /* Deepened slightly for better contrast on white */
+            --gold: #b08436; 
             --bg-white: #ffffff; 
             --bg-offwhite: #f9f9f9;
             --text-main: #1a1a1a;
@@ -43,7 +45,7 @@
         .logo { 
             font-family: 'Playfair Display', serif; 
             font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase;
-            color: #ffffff; /* Stays white over the dark image overlay */
+            color: #ffffff; 
         }
         .logo span { color: var(--gold); }
         
@@ -64,7 +66,7 @@
         
         .hero-bg { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            object-fit: cover; z-index: 1; filter: brightness(0.65); /* Lighter filter for a brighter feel */
+            object-fit: cover; z-index: 1; filter: brightness(0.65); 
         }
         
         .hero-content { position: relative; z-index: 2; max-width: 1000px; color: #ffffff; }
@@ -82,7 +84,6 @@
         }
         h1 em { font-style: italic; font-weight: 400; color: var(--gold); }
 
-        /* Expanded Specs for more context */
         .specs { 
             display: flex; gap: 40px; flex-wrap: wrap;
             border-top: 1px solid rgba(255,255,255,0.3); padding-top: 30px; 
@@ -114,7 +115,6 @@
             color: var(--text-muted); line-height: 1.8; font-size: 1.1rem; margin-bottom: 40px;
         }
 
-        /* New Robust Property Details List */
         .detail-list {
             list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
         }
@@ -196,7 +196,6 @@
         }
         .inquire-btn:hover { background: var(--gold); transform: translateY(-2px); }
 
-        /* Light Modal Architecture */
         .modal-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); 
@@ -229,6 +228,42 @@
         }
         .input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label { 
             top: -15px; font-size: 0.65rem; color: var(--gold); 
+        }
+        
+        /* INTL TEL INPUT OVERRIDES (LUXURY INTEGRATION) */
+        .iti { width: 100%; display: block; position: relative; }
+        .iti__flag-container { z-index: 10; }
+        
+        .iti input, .input-group .iti input { 
+            width: 100%; 
+            padding: 12px 0 12px 50px !important;
+            background: transparent; 
+            border: none; 
+            border-bottom: 1px solid rgba(0,0,0,0.2); 
+            color: var(--text-main); 
+            outline: none; 
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .phone-group #phone-label { 
+            left: 50px; 
+            z-index: 11;
+        }
+        
+        .phone-group input:focus ~ #phone-label, 
+        .phone-group input:not(:placeholder-shown) ~ #phone-label { 
+            top: -15px; 
+            left: 0; 
+            font-size: 0.65rem; 
+            color: var(--gold); 
+        }
+
+        .iti__search-input {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+            font-family: inherit;
         }
         
         .was-validated input:invalid { border-bottom-color: #ff5f56 !important; }
@@ -266,7 +301,7 @@
 
             .narrative-text h2 { font-size: 2.5rem; }
             .narrative-text p { font-size: 1rem; }
-            .detail-list { grid-template-columns: 1fr; } /* Stack details on mobile */
+            .detail-list { grid-template-columns: 1fr; } 
             
             .gallery-item, .gallery-item.large { height: 350px; }
 
@@ -385,9 +420,9 @@
                         <input type="email" required placeholder=" ">
                         <label>Email Address</label>
                     </div>
-                    <div class="input-group">
-                        <input type="tel" pattern="\d{11}" maxlength="11" required placeholder=" " oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                        <label>Phone (11 Digits)</label>
+                    <div class="input-group phone-group">
+                        <input type="tel" id="demo-modal-phone" required placeholder=" ">
+                        <label id="phone-label">Phone Number</label>
                     </div>
                     <button type="submit" class="submit-btn" id="prop-submit">Verify Availability &rarr;</button>
                 </form>
@@ -401,13 +436,67 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@21.2.7/build/js/intlTelInput.min.js"></script>
+        
+    <script
+    document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('booking-modal');
             const trigger = document.querySelector('.inquire-btn');
             const closeBtn = document.querySelector('.close-modal');
             const propForm = document.getElementById('property-inquiry');
             const propSubmit = document.getElementById('prop-submit');
+
+            // --- INTL TEL INPUT (LUXURY SMART CAP & RESET) ---
+            const phoneInput = document.getElementById('demo-modal-phone');
+            if (phoneInput) {
+                // Initialize the plugin
+                const iti = window.intlTelInput(phoneInput, {
+                    initialCountry: "ng",
+                    preferredCountries: ["ng", "us", "gb"],
+                    countrySearch: true, 
+                    autoPlaceholder: "off",
+                    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.2.7/build/js/utils.js",
+                });
+                
+                // Reposition the label for the floating effect
+                const phoneLabel = document.getElementById('phone-label');
+                const itiContainer = phoneInput.parentElement;
+                if (itiContainer.classList.contains('iti') && phoneLabel) {
+                    itiContainer.appendChild(phoneLabel);
+                }
+
+                // 1. THE DYNAMIC LOCK: Calculates max length and formats leading zeros
+                phoneInput.addEventListener('input', function() {
+                    const countryData = iti.getSelectedCountryData();
+                    let maxDigits = 15; // Global fallback
+                    
+                    let rawValue = this.value.replace(/[^0-9]/g, '');
+                    
+                    if (countryData.iso2 === 'ng') {
+                        maxDigits = 10; 
+                        if (rawValue.startsWith('0')) rawValue = rawValue.substring(1);
+                    } 
+                    else if (countryData.iso2 === 'us' || countryData.iso2 === 'ca') {
+                        maxDigits = 10; 
+                    } 
+                    else if (countryData.iso2 === 'gb') {
+                        maxDigits = 10; 
+                        if (rawValue.startsWith('0')) rawValue = rawValue.substring(1);
+                    }
+
+                    this.value = rawValue.substring(0, maxDigits);
+                });
+
+                // 2. THE RESET TRIGGER: Wipes the input clean when the flag changes
+                phoneInput.addEventListener('countrychange', function() {
+                    phoneInput.value = ''; // Instantly clears the old number
+                    
+                    // Optional: If you want to force the floating label to drop back down
+                    if (phoneLabel) {
+                        phoneLabel.style.left = '50px';
+                    }
+                });
+            }
 
             // Modal Toggles
             const openModal = () => { 
@@ -456,7 +545,7 @@
                     }, 1500);
                 });
             }
-        });
+        };
     </script>
 </body>
 </html>
