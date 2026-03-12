@@ -2049,6 +2049,24 @@ body.light-mode .message-prompt {
     .mobile-hint { display: inline; }
 }
 
+
+/* =========================================
+   MOBILE VIP LINK (LIVE SYSTEM)
+   ========================================= */
+.mobile-links a.mobile-demo-link {
+    color: var(--gold) !important;
+    font-weight: 700;
+    font-style: italic;
+    text-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
+    animation: soft-pulse 2s infinite;
+}
+
+/* Ensure it stays sharp if they open the menu in Light Mode */
+body.light-mode .mobile-links a.mobile-demo-link {
+    color: #8b6e37 !important;
+    text-shadow: none;
+}
+
 /* --- D. STANDARD SMARTPHONES: THE MASTER MOBILE BLOCK (Max-width: 768px) --- */
 @media (max-width: 768px) {
     /* 1. Typography & Centered Headers */

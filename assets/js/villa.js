@@ -317,3 +317,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+
+
+// =========================================
+// BFCache (BACK BUTTON) RESTORE FIX
+// =========================================
+window.addEventListener('pageshow', (event) => {
+    // 'event.persisted' is true if the browser pulled the page from the Back/Forward cache
+    if (event.persisted) {
+        const transitionOverlay = document.getElementById('page-transition');
+        if (transitionOverlay) {
+            // Instantly rip the black curtain away so the page is visible again
+            transitionOverlay.classList.remove('fade-out');
+        }
+    }
+});

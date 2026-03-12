@@ -324,6 +324,23 @@
             .sticky-bar { width: 94%; padding: 10px 15px; }
             .sticky-price { font-size: 1.1rem; }
         }
+
+
+        /* =========================================
+        INTL TEL INPUT MOBILE FIX
+        ========================================= */
+        /* Forces the mobile full-screen country list to float ABOVE the modal */
+        .iti--container, 
+        .iti__dropdown-content,
+        .iti-mobile .iti--fullscreen-popup {
+            z-index: 99999 !important; 
+        }
+
+        /* Ensures the text inside the country list stays dark and readable */
+        .iti__country-name, 
+        .iti__dial-code {
+            color: #1a1a1a !important;
+        }
     </style>
 </head>
 <body>
@@ -438,8 +455,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@21.2.7/build/js/intlTelInput.min.js"></script>
         
-    <script
-    document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('booking-modal');
             const trigger = document.querySelector('.inquire-btn');
             const closeBtn = document.querySelector('.close-modal');
@@ -455,14 +472,18 @@
                     preferredCountries: ["ng", "us", "gb"],
                     countrySearch: true, 
                     autoPlaceholder: "off",
+                    showSelectedDialCode: true, // <-- ADDED: Forces the +234 to be visible
                     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.2.7/build/js/utils.js",
                 });
                 
                 // Reposition the label for the floating effect
                 const phoneLabel = document.getElementById('phone-label');
                 const itiContainer = phoneInput.parentElement;
+                
+                // Adjust label position to account for the new dial code width
                 if (itiContainer.classList.contains('iti') && phoneLabel) {
                     itiContainer.appendChild(phoneLabel);
+                    phoneLabel.style.left = '90px'; // Pushed further right to clear the dial code
                 }
 
                 // 1. THE DYNAMIC LOCK: Calculates max length and formats leading zeros
@@ -545,7 +566,7 @@
                     }, 1500);
                 });
             }
-        };
+        });
     </script>
 </body>
 </html>
