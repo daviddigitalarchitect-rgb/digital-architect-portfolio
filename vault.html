@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Vault | Exclusive Listings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/vault.css">
+</head>
+<body>
+    
+    <div class="page-transition" id="page-transition"></div>
+
+    <div class="interactive-blueprint"></div>
+
+    <div class="command-center">
+        <div class="search-wrapper">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--gold)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="vault-search" placeholder="Search the vault...">
+        </div>
+        <div class="filter-pills">
+            <button class="pill active" data-filter="all">All Assets</button>
+            <button class="pill" data-filter="video">Cinematic Tours</button>
+            <button class="pill" data-filter="mansion">Mansions</button>
+            <button class="pill" data-filter="penthouse">Penthouses</button>
+        </div>
+    </div>
+
+    <main class="vault-grid" id="vault-grid">
+        
+        <div class="asset-card large" data-category="mansion" data-search="shadow estate lekki pool luxury mansion">
+            <img src="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260" alt="The Shadow Estate">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Mansion</span>
+                <h2>The Shadow Estate</h2>
+                <p>Lekki Phase 1 • $12.5M</p>
+                <a href="villa.html?id=shadow-estate"><button class="view-btn">View Asset &rarr;</button></a>
+            </div>
+        </div>
+
+        <div class="asset-card" data-category="video" data-search="glass villa abuja cinematic tour video pool modern">
+            <video autoplay muted loop playsinline poster="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=800">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
+            </video>
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge video-badge">▶ Play Tour</span>
+                <h2>The Glass Villa</h2>
+                <p>Abuja • $8.2M</p>
+                <a href="villa.html?id=glass-villa" class="view-btn">Watch &rarr;</a>
+            </div>
+        </div>
+
+        <div class="asset-card tall" data-category="penthouse" data-search="skyline penthouse ikoyi highrise luxury">
+            <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Skyline Penthouse">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Penthouse</span>
+                <h2>Skyline Reserve</h2>
+                <p>Ikoyi • $5.1M</p>
+                <a href="villa.html?id=skyline-penthouse"><button class="view-btn">View Asset &rarr;</button></a>
+            </div>
+        </div>
+
+        <div class="asset-card tall" data-category="video" data-search="zenith interior video tour living room cinematic">
+            <video autoplay muted loop playsinline style="object-position: center;" poster="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+            </video>
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge video-badge">▶ Play Tour</span>
+                <h2>Zenith Interiors</h2>
+                <p>Maitama • $4.1M</p>
+                <a href="villa.html?id=zenith-interiors"><button class="view-btn">Watch &rarr;</button></a>
+            </div>
+        </div>
+
+        <div class="asset-card" data-category="mansion" data-search="quartz manor banana island luxury architecture">
+            <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Quartz Manor">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Mansion</span>
+                <h2>Quartz Manor</h2>
+                <p>Banana Island • $15M</p>
+                <a href="villa.html?id=quartz-manor"><button class="view-btn">View Asset &rarr;</button></a>
+            </div>
+        </div>
+
+        <div class="asset-card" data-category="penthouse" data-search="aurora loft victoria island interior views">
+            <img src="https://images.pexels.com/photos/1454806/pexels-photo-1454806.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Aurora Loft">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Penthouse</span>
+                <h2>Aurora Loft</h2>
+                <p>Victoria Island • $3.4M</p>
+                <a href="villa.html?id=aurora-loft"><button class="view-btn">View Asset &rarr;</button></a>
+                
+            </div>
+        </div>
+
+
+        <div class="asset-card large" data-category="mansion" data-search="onyx estate waterfront luxury large pool">
+            <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="The Onyx Estate">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Mansion</span>
+                <h2>The Onyx Estate</h2>
+                <p>Eko Atlantic • $22M</p>
+                <a href="villa.html?id=onyx-estate"><button class="view-btn">View Asset &rarr;</button></a>
+            </div>
+        </div>
+
+        <div class="asset-card" data-category="penthouse" data-search="veranda suite penthouse city views">
+            <img src="https://images.pexels.com/photos/1571469/pexels-photo-1571469.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Veranda Suite">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Penthouse</span>
+                <h2>The Veranda Suite</h2>
+                <p>Lekki Phase 1 • $2.8M</p>
+                <a href="villa.html?id=veranda-suite" class="view-btn">View Asset &rarr;</a>
+            </div>
+        </div>
+
+        <div class="asset-card tall" data-category="mansion" data-search="lumina residence natural light windows tall">
+            <img src="https://images.pexels.com/photos/280222/pexels-photo-280222.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Lumina Residence">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Mansion</span>
+                <h2>Lumina Residence</h2>
+                <p>Banana Island • $11M</p>
+                <a href="villa.html?id=lumina-residence" class="view-btn">View Asset &rarr;</a>
+            </div>
+        </div>
+
+       
+
+        <div class="asset-card large" data-category="penthouse" data-search="monarch penthouse luxury interior living room">
+            <img src="https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Monarch Penthouse">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Penthouse</span>
+                <h2>The Monarch</h2>
+                <p>Ikoyi • $6.2M</p>
+                <a href="villa.html?id=monarch-penthouse" class="view-btn">View Asset &rarr;</a>
+            </div>
+        </div>
+
+        <div class="asset-card" data-category="mansion" data-search="crescent villa garden landscape">
+            <img src="https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Crescent Villa">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Mansion</span>
+                <h2>Crescent Villa</h2>
+                <p>Gwarinpa • $8.9M</p>
+                <a href="villa.html?id=crescent-villa" class="view-btn">View Asset &rarr;</a>
+            </div>
+        </div>
+
+
+
+        <div class="asset-card" data-category="mansion" data-search="slate residence modern architecture">
+            <img src="https://images.pexels.com/photos/209296/pexels-photo-209296.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Slate Residence">
+            <div class="hover-cue">Explore</div>
+            <div class="asset-overlay">
+                <span class="badge">Mansion</span>
+                <h2>Slate Residence</h2>
+                <p>Abuja • $5.5M</p>
+                <a href="villa.html?id=slate-residence" class="view-btn">View Asset &rarr;</a>
+            </div>
+        </div>
+
+       
+
+    </main>
+
+    <script src="assets/js/vault.js"></script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+:root {
+    --bg-dark: #050505;
+    --gold: #c5a059;
+    --text-main: #ffffff;
+    --text-muted: #888888;
+    --glass: rgba(15, 15, 15, 0.85);
+    --border: rgba(255, 255, 255, 0.08);
+    --transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+
+/* =========================================
+   CINEMATIC PAGE TRANSITION (BULLETPROOF)
+   ========================================= */
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #050505; 
+    z-index: 999999;
+    pointer-events: none; 
+    
+    /* Automatically lifts the curtain on load */
+    animation: fade-in-reveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+}
+
+/* 1. The Entrance Animation (Page Load) */
+@keyframes fade-in-reveal {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+/* 2. The Exit Animation (Triggered by JS when leaving) */
+.page-transition.fade-out {
+    animation: fade-out-leave 0.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-out-leave {
+    0% { opacity: 0; visibility: visible; }
+    100% { opacity: 1; visibility: visible; }
+}
+
+
+
+
+body {
+    background-color: #050505; 
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    padding: 140px 5% 50px; 
+    min-height: 100vh;
+    position: relative;
+    z-index: 0;
+}
+
+/* 2. THE BLUEPRINT GRID */
+.interactive-blueprint {
+    position: fixed;
+    inset: 0; 
+    z-index: -1;
+    pointer-events: none;
+    
+    /* The Architectural Gold Grid Lines */
+    background-image:
+        linear-gradient(rgba(197, 160, 89, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(197, 160, 89, 0.12) 1px, transparent 1px);
+    background-size: 80px 80px; 
+    
+    /* The Spotlight Mask (Defaults to center if no mouse movement) */
+    -webkit-mask-image: radial-gradient(circle 500px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
+    mask-image: radial-gradient(circle 500px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
+}
+
+
+
+
+/* --- Floating Command Center --- */
+.command-center {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    padding: 15px 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 100;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.search-wrapper:focus-within {
+    border-color: rgba(197, 160, 89, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#vault-search {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.05rem;
+    font-family: inherit;
+    outline: none;
+    width: 100%;
+}
+#vault-search::placeholder { color: var(--text-muted); font-weight: 300; }
+
+.filter-pills {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none; 
+}
+.filter-pills::-webkit-scrollbar { display: none; }
+
+.pill {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 8px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+.pill:hover { border-color: var(--text-muted); color: var(--text-main); }
+.pill.active { background: var(--text-main); color: var(--bg-dark); border-color: var(--text-main); font-weight: 500;}
+
+/* --- Asymmetric Matrix Grid --- */
+.vault-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 300px; 
+    grid-auto-flow: dense; 
+    gap: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.asset-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform var(--transition), opacity 0.4s ease;
+    background: #111;
+}
+
+.asset-card.large { grid-column: span 2; grid-row: span 2; }
+.asset-card.tall { grid-row: span 2; }
+
+.asset-card img, 
+.asset-card video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.8) grayscale(10%); 
+    transition: var(--transition);
+}
+
+/* --- Minimalist Hover Cue --- */
+.hover-cue {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 300;
+    transition: var(--transition);
+    pointer-events: none;
+    animation: soft-pulse 3s infinite;
+    z-index: 10;
+}
+
+@keyframes soft-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.05); }
+    50% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+.asset-card:hover .hover-cue {
+    opacity: 0; 
+    transform: translate(-50%, -60%);
+}
+
+.asset-card:hover img, 
+.asset-card:hover video {
+    filter: brightness(0.95) grayscale(0%);
+    transform: scale(1.05);
+}
+
+/* --- Reveal Overlay --- */
+.asset-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 50px 30px 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.asset-card:hover .asset-overlay {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.badge {
+    display: inline-block;
+    background: var(--gold);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.video-badge { background: #ffffff; color: #000; }
+
+.asset-overlay h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+.asset-overlay p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+.view-btn {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+}
+
+.asset-card.hidden { display: none; }
+
+/* --- Mobile Fixes --- */
+@media (max-width: 768px) {
+    body { padding-top: 180px; }
+    .vault-grid { grid-template-columns: 1fr; grid-auto-rows: 400px; }
+    .asset-card.large, .asset-card.tall { grid-column: span 1; grid-row: span 1; }
+    .hover-cue { display: none; } 
+    .asset-overlay { transform: translateY(0); opacity: 1; }
+    .asset-card img, .asset-card video { filter: brightness(0.7) grayscale(0%); }
+}
+
+/* =========================================
+   THE GLASS WALL FIX (Reveals the background)
+   ========================================= */
+main, .vault-container, .vault-wrapper {
+    position: relative;
+    z-index: 10;
+    background: transparent !important;
+}
+
+/* Also ensure the grid itself doesn't block the light */
+.vault-grid {
+    position: relative;
+    z-index: 10;
+}

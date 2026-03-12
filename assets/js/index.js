@@ -213,6 +213,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+
+        // --- PREMIUM KINETIC ENGINE ---
+    document.addEventListener('mousemove', (e) => {
+        const gateway = document.getElementById('premium-gateway');
+        if (!gateway) return;
+
+        // Calculate mouse position relative to the exact center of the screen
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const mouseX = e.clientX - centerX;
+        const mouseY = e.clientY - centerY;
+
+        // 1. Rotate the massive 3D container slightly
+        gateway.style.setProperty('--rotX', `${mouseX * 0.015}deg`);
+        gateway.style.setProperty('--rotY', `${mouseY * -0.015}deg`);
+
+        // 2. Parallax move the individual glass nodes
+        const nodes = document.querySelectorAll('.pg-node');
+        nodes.forEach(node => {
+            const speed = node.getAttribute('data-speed');
+            const moveX = mouseX * (speed / 1000);
+            const moveY = mouseY * (speed / 1000);
+            
+            node.style.setProperty('--moveX', `${moveX}px`);
+            node.style.setProperty('--moveY', `${moveY}px`);
+        });
+    });
+
+
    // --- 10. Node.js Form Submission ---
     
     // 1. Live Error Reset (Watches for typing/clicks)

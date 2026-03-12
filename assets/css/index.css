@@ -265,6 +265,49 @@ a:visited {
 body.light-mode #theme-toggle .sun { display: none; }
 body.light-mode #theme-toggle .moon { display: block; }
 
+
+
+/* --- SPECIAL DEMO NAV LINK --- */
+.nav-links a.demo-link-special {
+    color: var(--gold); /* Use your gold variable or #c5a059 */
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    animation: soft-pulse 2s infinite; /* Adds a very subtle premium pulse */
+}
+
+.nav-links a.demo-link-special:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+}
+
+@keyframes soft-pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+
+/* --- Light Mode Visibility Overrides --- */
+
+/* 1. Ensure the Toggle is visible in light mode */
+body.light-mode #theme-toggle {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+    color: #050505 !important;
+}
+
+
+body.light-mode .nav-links a.demo-link-special {
+    color: #8b6e37 !important; 
+    font-weight: 700;
+}
+
+body.light-mode .nav-links a.demo-link-special:hover {
+    color: #050505 !important;
+}
+
 /* Hamburger Menu */
 .hamburger { 
     display: none; 
@@ -1364,6 +1407,167 @@ body.light-mode .author-area span {
 
 
 
+
+/* =========================================
+   THE UNIFIED KINETIC GATEWAY
+   ========================================= */
+.premium-gateway {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 800px;
+    background-color: #030303;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-top: 1px solid rgba(197, 160, 89, 0.1);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+}
+
+.pg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* The atmospheric light that bonds the elements */
+.pg-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(197, 160, 89, 0.08) 0%, rgba(0,0,0,0) 60%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.pg-orbitals {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+    transform: rotateY(var(--rotX, 0deg)) rotateX(var(--rotY, 0deg));
+    transition: transform 0.1s linear;
+}
+
+.pg-node {
+    position: absolute;
+    background: rgba(15, 15, 15, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transform: translate(var(--moveX, 0px), var(--moveY, 0px)) rotate(var(--base-rot, 0deg));
+    transition: transform 0.1s linear;
+}
+
+.pg-node img {
+    width: 320px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 8px;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+.pg-node-tag { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; text-align: center; padding-bottom: 4px; }
+.pg-node-data { padding: 30px 40px; text-align: center; }
+.pg-val { display: block; font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; line-height: 1; margin-bottom: 5px; }
+.pg-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); }
+
+/* TIGHTER POSITIONS: They now tuck right behind the central glass hub */
+.pos-tl { --base-rot: -12deg; top: 10%; left: 50%; margin-left: -520px; }
+.pos-bl { --base-rot: 8deg; bottom: 10%; left: 50%; margin-left: -480px; }
+.pos-tr { --base-rot: 15deg; top: 15%; right: 50%; margin-right: -550px; }
+.pos-br { --base-rot: -10deg; bottom: 10%; right: 50%; margin-right: -480px; }
+
+/* --- THE CENTRAL GLASS HUB (The Bonding Agent) --- */
+.pg-core {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 750px;
+    padding: 60px 50px;
+    /* This frosted glass links the text to the 3D world */
+    background: rgba(8, 8, 8, 0.5); 
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.02);
+    pointer-events: auto;
+}
+
+.pg-badge {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    padding: 6px 15px;
+    border-radius: 50px;
+    background: rgba(197, 160, 89, 0.05);
+}
+
+.pg-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.pg-title em { color: var(--gold); font-style: italic; }
+
+.pg-desc {
+    font-size: 1.1rem;
+    color: #b0b0b0;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 550px;
+    margin-inline: auto;
+}
+
+.pg-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: #000;
+    text-decoration: none;
+    padding: 18px 45px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+}
+.pg-btn:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3); }
+
+/* Mobile Cleanup */
+@media (max-width: 900px) {
+    .pg-orbitals, .pg-glow { display: none; }
+    .pg-core { background: none; border: none; box-shadow: none; backdrop-filter: none; padding: 20px; }
+}
+
+
+
+
 /* =========================================
    13. NATURAL LANGUAGE FORM
    ========================================= */
@@ -1506,7 +1710,7 @@ body.light-mode .author-area span {
     font-family: 'Playfair Display', serif;
     font-style: italic;
     font-size: 1.4rem; /* Slightly larger for presence */
-    color: #1a1a1a !important; /* Solid Black */
+    color: #7e7d7d !important; /* Solid Black */
     font-weight: 700;
     margin-bottom: 20px;
     letter-spacing: -0.5px;
