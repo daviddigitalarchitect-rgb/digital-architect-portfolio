@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 3. Unified Theme Engine ---
     const themeBtn = document.getElementById('theme-toggle');
     
-    // Check local storage on load
     if (localStorage.getItem('theme') === 'light') {
         document.body.classList.add('light-mode');
     }
@@ -98,17 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         const scroll = window.scrollY;
         
-        // Back to top visibility
         if (topBtn) topBtn.style.display = scroll > 500 ? "block" : "none";
 
-        // Parallax safety check
         if (heroContent) {
             heroContent.style.transform = `translateY(${scroll * 0.4}px)`;
-            // Only fade out if they actually scrolled down significantly
             if (scroll > 10) {
                  heroContent.style.opacity = 1 - (scroll / 700);
             } else {
-                 heroContent.style.opacity = 1; // Force 100% visibility at the top
+                 heroContent.style.opacity = 1;
             }
         }
     });
@@ -122,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Stop observing once revealed for performance
+                observer.unobserve(entry.target); 
             }
         });
     }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
@@ -174,9 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (messageInput) {
         messageInput.addEventListener('input', function() {
-            // Reset the height momentarily to calculate the new exact scroll height
             this.style.height = 'auto';
-            // Set the new height based on the text inside, capped at whatever looks good
             this.style.height = (this.scrollHeight) + 'px';
         });
     }
@@ -185,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (messageArea) {
         messageArea.addEventListener('input', function() {
-            // This makes the underline stay under the text as it wraps
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + 'px';
         });
@@ -220,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const gateway = document.getElementById('premium-gateway');
         if (!gateway) return;
 
-        // Calculate mouse position relative to the exact center of the screen
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
         const mouseX = e.clientX - centerX;
@@ -274,14 +266,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const emailInput = document.getElementById('nl-email');
             const displayProjectInput = document.getElementById('nl-project-display');
             const hiddenProjectInput = document.getElementById('nl-project-hidden');
-            const messageInput = document.getElementById('client-message'); // NEW
+            const messageInput = document.getElementById('client-message'); 
 
             const nameVal = nameInput ? nameInput.value.trim() : '';
             const emailVal = emailInput ? emailInput.value.trim() : '';
             const projectVal = (hiddenProjectInput && hiddenProjectInput.value.trim()) ? hiddenProjectInput.value.trim() : (displayProjectInput ? displayProjectInput.value.trim() : '');
-            const messageVal = messageInput ? messageInput.value.trim() : ''; // NEW
+            const messageVal = messageInput ? messageInput.value.trim() : ''; 
 
-            // Clean the slate
             [nameInput, emailInput, displayProjectInput].forEach(el => {
                 if (el) el.classList.remove('error-state');
             });
@@ -289,7 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isEmailValid = emailRegex.test(emailVal);
 
-            // THE GATEKEEPER
             if (!nameVal || !emailVal || !projectVal || !isEmailValid) {
                 if (!nameVal && nameInput) nameInput.classList.add('error-state');
                 if (!projectVal && displayProjectInput) displayProjectInput.classList.add('error-state');
@@ -332,14 +322,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (btnIconDisplay) btnIconDisplay.innerHTML = `<polyline points="20 6 9 17 4 12"></polyline>`;
                         magBtn.style.transform = 'translate(0px, 0px)';
                         
-                        // Reset message box height
                         if (messageInput) messageInput.style.height = 'auto';
 
                         // 2. Trigger the Exquisite Pop-up
                         setTimeout(() => {
                             const modal = document.getElementById('success-modal');
                             if (modal) {
-                                modal.style.display = 'flex'; // Ensure it's visible
+                                modal.style.display = 'flex'; 
                                 setTimeout(() => modal.classList.add('active'), 10);
                             }
                             
@@ -351,11 +340,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         throw new Error('Server rejected request');
                     }
                 } catch (error) {
-                    // This catches network errors or the "Server rejected" error above
                     console.error("Fetch failed:", error);
                     btnTextDisplay.textContent = 'FAILED. TRY AGAIN.';
                     magBtn.style.pointerEvents = 'auto';
-                    magBtn.classList.remove('success-state'); // Ensure button isn't green if it failed
+                    magBtn.classList.remove('success-state');
                 }
             }
         });
@@ -411,10 +399,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Safari/Mobile back-button fix for page transitions
 window.addEventListener('pageshow', (e) => {
     if (e.persisted) document.body.style.opacity = '1';
 });
 
-// Force browser to remember scroll position on back button
 if ('scrollRestoration' in history) { history.scrollRestoration = 'auto'; }

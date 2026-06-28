@@ -126,15 +126,10 @@ body {
     color: #ff5f56;
     text-transform: uppercase;
     letter-spacing: 1px;
-    opacity: 0; /* Hidden by default */
+    opacity: 0; 
     transition: opacity 0.3s ease;
     pointer-events: none;
 }
-
-/* ONLY show red borders and tips if:
-   1. The form has the 'was-validated' class (user clicked submit)
-   2. OR the user has typed something and it's still wrong (:not(:placeholder-shown))
-*/
 
 .was-validated .input-group input:invalid,
 .input-group input:not(:placeholder-shown):invalid {
@@ -143,7 +138,7 @@ body {
 
 .was-validated .input-group input:invalid ~ .error-tip,
 .input-group input:not(:placeholder-shown):invalid ~ .error-tip {
-    opacity: 1; /* Revealed only on error state */
+    opacity: 1; 
 }
 
 /* Shake animation for the button */
@@ -270,10 +265,6 @@ body {
 
 
 
-
-
-
-
 /* --- Trust Bar Styling --- */
 .trust-bar {
     background: #0d0d0d;
@@ -353,7 +344,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* --- Enhanced Testimonial Styling --- */
+/* --- Testimonial Styling --- */
 .testimonial-section {
     padding: 180px 10%;
     background: #0d0d0d;
@@ -368,7 +359,7 @@ body {
 
 .quote {
     font-family: 'Playfair Display', serif;
-    font-size: 3rem; /* Much louder and more confident */
+    font-size: 3rem; 
     font-style: italic;
     line-height: 1.2;
     margin-bottom: 50px;
@@ -394,7 +385,7 @@ body {
     text-transform: uppercase;
 }
 
-/* --- Final CTA Section --- */
+/* --- CTA Section --- */
 .final-cta {
     padding: 100px 5%;
     background: #0a0a0a;
@@ -452,7 +443,6 @@ body {
 }
 
 @media (max-width: 850px) {
-    /* Break the Split Screen Hero */
     .split-layout {
         flex-direction: column;
     }
@@ -467,7 +457,6 @@ body {
         padding: 60px 8%;
     }
 
-    /* Form Row: Stack Email and Phone */
     .input-row {
         flex-direction: column;
         gap: 0;
@@ -488,20 +477,16 @@ body {
 
 /* --- TABLETS & SMALL LAPTOPS --- */
 @media (max-width: 992px) {
-    /* 1. Stack the Hero Layout */
     .split-layout { flex-direction: column; }
     
-    /* Image moves below form so they see the lead capture first */
     .content-side { padding: 80px 5%; order: 1; }
     .visual-side { min-height: 50vh; padding: 40px; order: 2; } 
     
-    /* 2. Form Row Adjustments */
     .input-row { flex-direction: column; gap: 30px; }
 }
 
-/* --- STANDARD SMARTPHONES (THE MASTER FIX) --- */
+/* --- STANDARD SMARTPHONES --- */
 @media (max-width: 768px) {
-    /* 1. Typography Refinement (Editorial Downscale) */
     .demo-title { font-size: 2.2rem !important; line-height: 1.2 !important; margin-bottom: 15px; }
     .demo-subtext { font-size: 0.95rem; margin-bottom: 40px; }
     .process-title { font-size: 2.2rem !important; }
@@ -509,27 +494,22 @@ body {
     .final-cta h2 { font-size: 1.8rem !important; }
     .process-card h3 { font-size: 1.3rem !important; }
 
-    /* 2. Global Centering Fix for Mobile */
     .process-header, .testimonial-section, .final-cta, .demo-footer {
         text-align: center !important;
     }
 
-    /* 3. Button & Input Scaling */
     .submit-btn, .back-to-form { 
         width: 100% !important; 
         padding: 16px !important; 
         font-size: 0.85rem !important; 
     }
     
-    /* Ensures floating labels have room to jump up without hitting the text above */
     .input-group { margin-bottom: 30px; } 
     
-    /* 4. Spacing Gaps & Layout fixes */
     .process-grid { grid-template-columns: 1fr; gap: 25px; }
     .process-section, .testimonial-section { padding: 80px 5% !important; }
     .logo-grid { gap: 30px; flex-wrap: wrap; justify-content: center; }
     
-    /* 5. Navigation Badge */
     .return-badge { top: 20px; left: 20px; font-size: 0.7rem; }
 }
 

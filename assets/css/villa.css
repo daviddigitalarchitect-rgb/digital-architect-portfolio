@@ -14,7 +14,7 @@
 
 
 /* =========================================
-   CINEMATIC PAGE TRANSITION (BULLETPROOF)
+   CINEMATIC PAGE TRANSITION
    ========================================= */
 .page-transition {
     position: fixed;
@@ -26,7 +26,6 @@
     z-index: 999999;
     pointer-events: none; 
     
-    /* Automatically lifts the curtain on load */
     animation: fade-in-reveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
 }
 
@@ -56,18 +55,15 @@
     z-index: -1; 
     pointer-events: none; 
     
-    /* The Gold Grid */
     background-image:
         linear-gradient(rgba(197, 160, 89, 0.12) 1px, transparent 1px),
         linear-gradient(90deg, rgba(197, 160, 89, 0.12) 1px, transparent 1px);
     background-size: 80px 80px; 
     
-    /* The Flashlight Mask */
     -webkit-mask-image: radial-gradient(circle 500px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
     mask-image: radial-gradient(circle 500px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
 }
 
-/* Also ensure your Villa body is dark and transparent so the grid shows through */
 body {
     background-color: #050505;
 }
@@ -99,7 +95,7 @@ body {
 
 /* --- Main Layout --- */
 .asset-showcase {
-    max-width: 1500px; /* Made wider for bigger media */
+    max-width: 1500px; 
     margin: 30px auto 0;
     padding: 0 5%;
 }
@@ -114,7 +110,7 @@ body {
 
 .showcase-grid {
     display: grid;
-    grid-template-columns: 120px 1fr; /* Slimmer filmstrip, MASSIVE image */
+    grid-template-columns: 120px 1fr;
     gap: 30px;
 }
 
@@ -170,7 +166,7 @@ body {
 
 .feature-media-container {
     width: 100%;
-    aspect-ratio: 16 / 9; /* Beautiful widescreen format */
+    aspect-ratio: 16 / 9; 
     border-radius: 8px;
     overflow: hidden;
     background: var(--card-bg);
@@ -218,12 +214,12 @@ body {
     align-items: center;
     background: #e5e0d8; 
     border-radius: 100px;
-    padding: 6px 6px 6px 25px; /* Tighter padding */
+    padding: 6px 6px 6px 25px; 
 }
 
 .price-tag {
     font-family: 'Playfair Display', serif;
-    font-size: 1.4rem; /* Scaled down from 1.8rem */
+    font-size: 1.4rem; 
     font-weight: 600;
     color: #1a1a1a;
     padding-right: 25px;
@@ -233,11 +229,11 @@ body {
     background: #1a1a1a;
     color: #ffffff;
     text-decoration: none;
-    font-size: 0.7rem; /* Sharper text */
+    font-size: 0.7rem; 
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
-    padding: 14px 30px; /* Slimmer button */
+    padding: 14px 30px; 
     border-radius: 100px;
     transition: var(--transition);
 }
@@ -246,7 +242,7 @@ body {
 /* --- NEW: Editorial Context Section --- */
 .property-context {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Text on left, Amenities on right */
+    grid-template-columns: 2fr 1fr; 
     gap: 60px;
     margin-top: 60px;
     padding-top: 60px;
@@ -303,7 +299,6 @@ body {
     
     .showcase-grid { grid-template-columns: 1fr; gap: 20px; }
     
-    /* Filmstrip moves to horizontal row below image on mobile */
     .vertical-filmstrip { flex-direction: row; max-height: unset; overflow-x: auto; order: 2; padding-bottom: 10px;}
     .main-display-area { order: 1; }
     .thumb-wrapper { width: 100px; flex-shrink: 0; }

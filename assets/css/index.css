@@ -269,12 +269,12 @@ body.light-mode #theme-toggle .moon { display: block; }
 
 /* --- SPECIAL DEMO NAV LINK --- */
 .nav-links a.demo-link-special {
-    color: var(--gold); /* Use your gold variable or #c5a059 */
+    color: var(--gold); 
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
     font-size: 0.85rem;
-    animation: soft-pulse 2s infinite; /* Adds a very subtle premium pulse */
+    animation: soft-pulse 2s infinite; 
 }
 
 .nav-links a.demo-link-special:hover {
@@ -291,7 +291,6 @@ body.light-mode #theme-toggle .moon { display: block; }
 
 /* --- Light Mode Visibility Overrides --- */
 
-/* 1. Ensure the Toggle is visible in light mode */
 body.light-mode #theme-toggle {
     background: rgba(0, 0, 0, 0.05) !important;
     border-color: rgba(0, 0, 0, 0.2) !important;
@@ -1181,7 +1180,7 @@ body.light-mode .sr-link:hover {
     box-shadow: 0 4px 15px rgba(184, 144, 71, 0.4); 
 }
 
-/* WORK WITH ME LIGHT MODE OVERRIDES (TRUE GLASS & CLEAN) */
+/* "WORK WITH ME" LIGHT MODE OVERRIDES  */
 body.light-mode .parallax-work-wrapper::before {
     background: rgba(10, 10, 10, 0.3); 
 }
@@ -1347,49 +1346,44 @@ body.light-mode .author-area span {
    CLIENT COMMITMENT SECTION - MOBILE MATRIX
    ========================================= */
 
-/* Tablet View: Tighten the gap before they stack */
 @media (max-width: 992px) {
     .commitment-cards-container {
         gap: 30px;
     }
 }
 
-/* Mobile View: Stack them vertically and adjust inner spacing */
 @media (max-width: 768px) {
     commitment-cards-container {
         display: flex; 
         flex-direction: column;
-        align-items: center; /* Centers the cards in the middle of the screen */
+        align-items: center; 
         width: 100%;
         gap: 40px; 
     }
 
     .commitment-card {
-        width: 100%; /* Forces the card to stretch across the phone screen */
-        max-width: 100%; /* Overrides any fixed desktop widths */
-        margin: 0 auto; /* Ensures perfect centering */
-        padding: 40px 25px; /* Adjusted padding for better breathing room */
-        box-sizing: border-box; /* Stops padding from pushing it off-screen */
+        width: 100%;
+        max-width: 100%; 
+        margin: 0 auto;
+        padding: 40px 25px; 
+        box-sizing: border-box; 
     }
 
-    /* Center the main section title for mobile */
     .commitment-header {
         text-align: center;
         margin-bottom: 40px;
     }
     
     .commitment-header h2 {
-        font-size: 2.5rem; /* Scales down "The Architect's Standard" */
+        font-size: 2.5rem; 
     }
 
-    /* Keep the italic quote readable but not overwhelming on small screens */
     .commitment-card .quote {
         font-size: 1.15rem; 
         line-height: 1.6;
     }
 }
 
-/* Small Phones (iPhone SE, etc.) */
 @media (max-width: 480px) {
     .commitment-card {
         padding: 30px 20px;
@@ -1436,7 +1430,6 @@ body.light-mode .author-area span {
     pointer-events: none;
 }
 
-/* The atmospheric light that bonds the elements */
 .pg-glow {
     position: absolute;
     top: 50%;
@@ -1490,7 +1483,6 @@ body.light-mode .author-area span {
 .pg-val { display: block; font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; line-height: 1; margin-bottom: 5px; }
 .pg-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); }
 
-/* TIGHTER POSITIONS: They now tuck right behind the central glass hub */
 .pos-tl { --base-rot: -12deg; top: 10%; left: 50%; margin-left: -520px; }
 .pos-bl { --base-rot: 8deg; bottom: 10%; left: 50%; margin-left: -480px; }
 .pos-tr { --base-rot: 15deg; top: 15%; right: 50%; margin-right: -550px; }
@@ -1503,7 +1495,6 @@ body.light-mode .author-area span {
     text-align: center;
     max-width: 750px;
     padding: 60px 50px;
-    /* This frosted glass links the text to the 3D world */
     background: rgba(8, 8, 8, 0.5); 
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -1559,7 +1550,6 @@ body.light-mode .author-area span {
 }
 .pg-btn:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3); }
 
-/* Mobile Cleanup */
 @media (max-width: 900px) {
     .pg-orbitals, .pg-glow { display: none; }
     .pg-core { background: none; border: none; box-shadow: none; backdrop-filter: none; padding: 20px; }
@@ -1694,7 +1684,6 @@ body.light-mode .author-area span {
     display: inline-block; 
 }
 
-/* --- PREMIUM INTEGRATED MESSAGE BOX (BLACK PROMPT FIX) --- */
 .custom-message-box {
     width: 100%;
     margin: 60px auto; 
@@ -1704,19 +1693,17 @@ body.light-mode .author-area span {
     align-items: center;
 }
 
-/* The prompt is now Black, bold, and distinct */
 .message-prompt {
     display: block;
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 1.4rem; /* Slightly larger for presence */
-    color: #7e7d7d !important; /* Solid Black */
+    font-size: 1.4rem; 
+    color: #7e7d7d !important;
     font-weight: 700;
     margin-bottom: 20px;
     letter-spacing: -0.5px;
 }
 
-/* The Gold Input Area */
 .nl-message-input {
     width: 100%;
     max-width: 750px;
@@ -1728,8 +1715,8 @@ body.light-mode .author-area span {
     
     font-family: 'Inter', sans-serif;
     font-size: 1.15rem;
-    color: var(--gold) !important; /* Strictly Gold */
-    caret-color: var(--gold) !important; /* Gold blinking cursor */
+    color: var(--gold) !important; 
+    caret-color: var(--gold) !important; 
     letter-spacing: 0.5px;
     
     text-align: center;
@@ -1744,7 +1731,6 @@ body.light-mode .author-area span {
     text-shadow: 0 0 8px rgba(176, 132, 54, 0.1);
 }
 
-/* Placeholder - Muted Gold */
 .nl-message-input::placeholder {
     color: var(--gold) !important;
     opacity: 0.3;
@@ -1757,7 +1743,6 @@ body.light-mode .author-area span {
     display: none;
 }
 
-/* Light Mode Sync */
 body.light-mode .message-prompt {
     color: #000 !important;
 }
@@ -1772,9 +1757,9 @@ body.light-mode .message-prompt {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Deep backdrop */
-    backdrop-filter: blur(15px); /* Premium blur */
-    display: none; /* Hidden by default */
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px); 
+    display: none; 
     align-items: center;
     justify-content: center;
     z-index: 9999;
@@ -1890,7 +1875,6 @@ body.light-mode .message-prompt {
     transform: none !important; 
 }
 
-/* Premium Form Error States */
 .input-wrapper input.error-state,
 .dropdown-trigger input.error-state {
     color: #ff3333 !important;
@@ -2061,7 +2045,6 @@ body.light-mode .message-prompt {
     animation: soft-pulse 2s infinite;
 }
 
-/* Ensure it stays sharp if they open the menu in Light Mode */
 body.light-mode .mobile-links a.mobile-demo-link {
     color: #8b6e37 !important;
     text-shadow: none;
@@ -2069,7 +2052,6 @@ body.light-mode .mobile-links a.mobile-demo-link {
 
 /* --- D. STANDARD SMARTPHONES: THE MASTER MOBILE BLOCK (Max-width: 768px) --- */
 @media (max-width: 768px) {
-    /* 1. Typography & Centered Headers */
     .section-header, .about-title-large, .section-title, .tagline {
         text-align: center !important; width: 100% !important; align-items: center !important; justify-content: center !important;
     }
@@ -2078,13 +2060,11 @@ body.light-mode .mobile-links a.mobile-demo-link {
     .sr-title { font-size: 1.5rem !important; line-height: 1.2 !important; margin-bottom: 10px !important; }
     .sr-desc { font-size: 0.95rem !important; }
 
-    /* 2. Buttons & Links */
     .btn-primary, .btn-secondary, .magnetic-btn {
         padding: 12px 24px !important; font-size: 0.75rem !important; letter-spacing: 1px !important; width: auto !important;
     }
     .sr-link { font-size: 0.7rem !important; letter-spacing: 1.5px !important; gap: 8px !important; }
 
-    /* 3. Natural Language Form */
     .nl-sentence { text-align: left; font-size: 1.3rem !important; line-height: 2 !important; }
     .input-wrapper, .custom-dropdown { display: block; width: 100%; margin: 15px 0; }
     .custom-dropdown { min-width: 100%; }
@@ -2093,35 +2073,28 @@ body.light-mode .mobile-links a.mobile-demo-link {
         font-size: 1.1rem !important; padding: 5px 0 !important; margin: 10px 0 !important; text-align: left !important; width: 100% !important; 
     }
 
-    /* 4. Portfolio / Showroom */
     .showroom-stack { gap: 60px !important; margin-top: 40px !important; }
     .sr-image img { aspect-ratio: 4 / 3 !important; border-radius: 8px !important; }
 
-    /* 5. Accordion (Approach) */
     .accordion-panel h3 { font-size: 1.25rem !important; }
     .panel-number { font-size: 1rem !important; }
     .interaction-hint { display: block !important; font-size: 0.8rem !important; opacity: 0.8 !important; margin-top: 10px !important; color: var(--gold) !important; }
     .accordion-panel.active-panel { min-height: 250px !important; }
 
-    /* 6. Bento Reviews */
     .review-card { padding: 25px !important; min-height: auto !important; }
     .review-text { font-size: 1.1rem !important; margin-bottom: 20px !important; }
 
-    /* 7. Tech Marquee */
     .marquee-content span { font-size: 2.5rem !important; -webkit-text-stroke: 0.5px var(--text-muted) !important; }
     .marquee-content .dot { margin: 0 20px !important; }
 
-    /* 8. About Page */
     .about-clean-container { padding-top: 100px; }
     .about-main-image { margin-bottom: 40px !important; border-radius: 12px !important; }
     .story-block { margin-bottom: 40px !important; }
     .story-block h3 { font-size: 1.5rem !important; }
     .story-block p { font-size: 1.05rem !important; }
 
-    /* 9. Footer */
     .footer-content { flex-direction: column; gap: 20px; text-align: center; }
 
-    /* 10. Work With Me Section Fix */
     .parallax-work-wrapper {
         padding: 70px 15px;
         background-attachment: scroll; 

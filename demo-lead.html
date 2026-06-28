@@ -12,7 +12,7 @@
            1. GLOBAL VARIABLES & LIGHT THEME
            ========================================= */
         :root {
-            --gold: #b08436; /* Deepened for white contrast */
+            --gold: #b08436; 
             --bg-white: #ffffff;
             --bg-offwhite: #f9f9f9;
             --text-main: #1a1a1a;
@@ -70,7 +70,6 @@
             object-fit: cover; z-index: 1;
         }
 
-        /* White gradient fade to blend the image seamlessly into the form */
         .visual-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -178,12 +177,11 @@
         /* --- PREMIUM INTL-TEL-INPUT CUSTOMIZATION --- */
         .iti { width: 100%; }
 
-        /* Make the input field seamless */
         .iti input {
             background: transparent !important;
             border: none !important;
             border-bottom: 1px solid var(--border-light) !important;
-            padding: 15px 0 15px 95px !important; /* Makes room for the flag/code */
+            padding: 15px 0 15px 95px !important; 
             font-family: 'Inter', sans-serif !important;
             color: var(--text-main) !important;
             border-radius: 0 !important;
@@ -200,7 +198,7 @@
         .iti__selected-flag { background: transparent !important; padding: 0 10px 0 0 !important; }
 
         .iti__selected-dial-code {
-            color: var(--gold); /* Gives the dial code that luxury gold accent */
+            color: var(--gold); 
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             margin-left: 5px;
@@ -208,7 +206,7 @@
 
         /* --- THE FIX: Floating Label Logic for Phone --- */
         .phone-group label {
-            left: 95px; /* Starts the label AFTER the flag */
+            left: 95px; 
             z-index: 2;
         }
 
@@ -216,7 +214,7 @@
         .input-group:focus-within label,
         .input-group:has(input:not(:placeholder-shown)) label {
             top: -10px !important;
-            left: 0 !important; /* Snaps back to the left when floating */
+            left: 0 !important; 
             font-size: 0.75rem !important;
             color: var(--text-main) !important;
             letter-spacing: 1px !important;
@@ -460,69 +458,59 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@21.1.1/build/js/intlTelInput.min.js"></script>
 
     <script>
-        // Initialize the global phone input
         const phoneInputField = document.querySelector("#phone");
         const phoneInputPlugin = window.intlTelInput(phoneInputField, {
             initialCountry: "ng",
             separateDialCode: true,
-            countrySearch: true, // Keeps the premium search bar
-            strictMode: true, // Natively blocks typing past max length
-            autoPlaceholder: "off", // Protects your custom floating label CSS
+            countrySearch: true, 
+            strictMode: true, 
+            autoPlaceholder: "off", 
             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.1.1/build/js/utils.js"
         });
 
-        // --- THE ULTIMATE DYNAMIC MAXLENGTH HACK (FIXED) ---
+        // --- THE ULTIMATE DYNAMIC MAXLENGTH HACK ---
         function applySmartCap() {
             if (window.intlTelInputUtils) {
                 const countryData = phoneInputPlugin.getSelectedCountryData();
                 
-                // 1. Ask the brain for the INTERNATIONAL example (e.g., "+234 803 123 4567")
-                // Setting that second parameter to 'false' forces the international layout
                 const exampleNumber = window.intlTelInputUtils.getExampleNumber(countryData.iso2, false, 1) || "";
                 
-                // 2. Clean it to just the raw numbers (e.g., "2348031234567")
                 const fullDigits = exampleNumber.replace(/[^0-9]/g, '');
                 
-                // 3. Subtract the country code length from the total length
-                // For Nigeria: 13 total digits - 3 digits for "234" = 10 strictly allowed digits!
                 const exactDigitCount = fullDigits.length - countryData.dialCode.length;
                 
                 if (exactDigitCount > 0) {
                     phoneInputField.setAttribute("maxlength", exactDigitCount);
                 } else {
-                    phoneInputField.setAttribute("maxlength", "15"); // Safe fallback
+                    phoneInputField.setAttribute("maxlength", "15"); 
                 }
             }
         }
 
-        // Keep checking until the brain loads in the background, then lock the length
         const checkUtilsLoaded = setInterval(() => {
             if (window.intlTelInputUtils) {
                 applySmartCap();
-                clearInterval(checkUtilsLoaded); // Stop checking once loaded
+                clearInterval(checkUtilsLoaded); 
             }
         }, 100);
 
         // --- FORM VALIDATION & UX ---
         phoneInputField.addEventListener('input', function() {
-            // Instantly strip letters/symbols
             this.value = this.value.replace(/[^0-9]/g, '');
 
-            // Handle your custom Red Error Line UI
             if (this.value.trim() === "") {
                 this.setCustomValidity("Required"); 
             } else if (phoneInputPlugin.isValidNumber()) {
-                this.setCustomValidity(""); // Valid!
+                this.setCustomValidity(""); 
             } else {
                 this.setCustomValidity("Invalid number"); 
             }
         });
 
-        // Luxury UX: Reset field and recalculate max length when changing country
         phoneInputField.addEventListener("countrychange", function() {
             this.value = "";
             this.setCustomValidity("Required"); 
-            applySmartCap(); // Instantly adjusts the max length for the new flag
+            applySmartCap();
         });
 
         // --- FORM SUBMISSION ---

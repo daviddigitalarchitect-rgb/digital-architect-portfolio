@@ -10,20 +10,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     transitionLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault(); // Stop the instant jump
+            e.preventDefault(); 
             const targetUrl = link.getAttribute('href');
             const transitionOverlay = document.getElementById('page-transition');
             
             if (transitionOverlay) {
-                // Drop the black curtain
                 transitionOverlay.classList.add('fade-out'); 
                 
-                // Wait 500ms for it to turn black, then load next page
                 setTimeout(() => {
                     window.location.href = targetUrl;
                 }, 500); 
             } else {
-                // Failsafe
                 window.location.href = targetUrl; 
             }
         });
@@ -110,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('mousemove', (e) => {
     const blueprint = document.querySelector('.interactive-blueprint');
     if (blueprint) {
-        // Updates the CSS variables with the exact pixel location of the mouse
         blueprint.style.setProperty('--mouse-x', `${e.clientX}px`);
         blueprint.style.setProperty('--mouse-y', `${e.clientY}px`);
     }
@@ -124,26 +120,21 @@ const assetCards = document.querySelectorAll('.asset-card');
 
 assetCards.forEach(card => {
     card.addEventListener('click', (e) => {
-        // 1. Prevent normal link jumping if they happened to click the actual text
         e.preventDefault();
 
-        // 2. Find the anchor link (<a>) hidden inside this specific card
         const link = card.querySelector('a');
-        if (!link) return; // Failsafe in case a card is missing a link
+        if (!link) return;
         
         const targetUrl = link.getAttribute('href');
         const transitionOverlay = document.getElementById('page-transition');
         
         if (transitionOverlay) {
-            // Drop the black cinematic curtain
             transitionOverlay.classList.add('fade-out'); 
             
-            // Teleport to the Villa page after 500ms
             setTimeout(() => {
                 window.location.href = targetUrl;
             }, 500); 
         } else {
-            // Failsafe if the transition curtain is missing
             window.location.href = targetUrl; 
         }
     });
@@ -154,11 +145,9 @@ assetCards.forEach(card => {
 // BFCache (BACK BUTTON) RESTORE FIX
 // =========================================
 window.addEventListener('pageshow', (event) => {
-    // 'event.persisted' is true if the browser pulled the page from the Back/Forward cache
     if (event.persisted) {
         const transitionOverlay = document.getElementById('page-transition');
         if (transitionOverlay) {
-            // Instantly rip the black curtain away so the page is visible again
             transitionOverlay.classList.remove('fade-out');
         }
     }

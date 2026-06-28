@@ -9,20 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     transitionLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault(); // Stop the instant jump
+            e.preventDefault(); 
             const targetUrl = link.getAttribute('href');
             const transitionOverlay = document.getElementById('page-transition');
             
             if (transitionOverlay) {
-                // Drop the black curtain
                 transitionOverlay.classList.add('fade-out'); 
                 
-                // Wait 500ms for it to turn black, then load next page
                 setTimeout(() => {
                     window.location.href = targetUrl;
                 }, 500); 
             } else {
-                // Failsafe
                 window.location.href = targetUrl; 
             }
         });
@@ -34,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', (e) => {
         const blueprint = document.querySelector('.interactive-blueprint');
         if (blueprint) {
-            // Updates the CSS variables with the exact mouse location
             blueprint.style.setProperty('--mouse-x', `${e.clientX}px`);
             blueprint.style.setProperty('--mouse-y', `${e.clientY}px`);
         }
@@ -242,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. GET THE ID FROM THE URL ---
     const urlParams = new URLSearchParams(window.location.search);
-    const propertyId = urlParams.get('id') || 'shadow-estate'; // Defaults to shadow-estate if no ID
+    const propertyId = urlParams.get('id') || 'shadow-estate'; 
     const data = propertyDatabase[propertyId];
 
     if (!data) {
@@ -270,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 4. INJECT MEDIA & SETUP GALLERY LOGIC ---
     const thumbnailStrip = document.getElementById('thumbnail-strip');
     const featureContainer = document.getElementById('feature-container');
-    thumbnailStrip.innerHTML = ''; // Clear old thumbnails
+    thumbnailStrip.innerHTML = ''; 
 
     // Load main media (first item in the array)
     loadMainMedia(data.media[0]);
@@ -324,11 +320,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // BFCache (BACK BUTTON) RESTORE FIX
 // =========================================
 window.addEventListener('pageshow', (event) => {
-    // 'event.persisted' is true if the browser pulled the page from the Back/Forward cache
     if (event.persisted) {
         const transitionOverlay = document.getElementById('page-transition');
         if (transitionOverlay) {
-            // Instantly rip the black curtain away so the page is visible again
             transitionOverlay.classList.remove('fade-out');
         }
     }

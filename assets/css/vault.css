@@ -25,7 +25,6 @@
     z-index: 999999;
     pointer-events: none; 
     
-    /* Automatically lifts the curtain on load */
     animation: fade-in-reveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
 }
 
@@ -58,20 +57,17 @@ body {
     z-index: 0;
 }
 
-/* 2. THE BLUEPRINT GRID */
 .interactive-blueprint {
     position: fixed;
     inset: 0; 
     z-index: -1;
     pointer-events: none;
     
-    /* The Architectural Gold Grid Lines */
     background-image:
         linear-gradient(rgba(197, 160, 89, 0.12) 1px, transparent 1px),
         linear-gradient(90deg, rgba(197, 160, 89, 0.12) 1px, transparent 1px);
     background-size: 80px 80px; 
     
-    /* The Spotlight Mask (Defaults to center if no mouse movement) */
     -webkit-mask-image: radial-gradient(circle 500px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
     mask-image: radial-gradient(circle 500px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
 }
@@ -287,7 +283,7 @@ body {
 }
 
 /* =========================================
-   THE GLASS WALL FIX (Reveals the background)
+   THE GLASS WALL (Reveals the background)
    ========================================= */
 main, .vault-container, .vault-wrapper {
     position: relative;
@@ -295,7 +291,6 @@ main, .vault-container, .vault-wrapper {
     background: transparent !important;
 }
 
-/* Also ensure the grid itself doesn't block the light */
 .vault-grid {
     position: relative;
     z-index: 10;
