@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Olawale | Digital Architect</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: url('./assets/img/mansions.jpg') center/cover fixed;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The Glass Container */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            display: flex;
+            max-width: 900px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Left Side: Profile */
+        .profile-side {
+            padding: 50px 40px;
+            text-align: center;
+            flex: 1;
+            border-right: 1px solid rgba(255,255,255,0.4);
+        }
+        .profile-pic {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid #C49A45; /* Gold border */
+            object-fit: cover;
+        }
+        h1 { margin: 15px 0 5px; font-family: serif; font-size: 32px; color: #1a1a1a;}
+        h3 { margin: 0; color: #C49A45; font-size: 14px; letter-spacing: 2px;}
+        p { color: #444; font-size: 15px; line-height: 1.5; margin-top: 20px;}
+
+        /* Right Side: Links */
+        .links-side {
+            padding: 50px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .destination-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #555;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        /* The Buttons */
+        .link-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            margin-bottom: 15px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .link-btn:hover { transform: translateY(-3px); }
+        
+        .btn-black { background: #1a1a1a; color: #fff; }
+        .btn-white { background: #fdfdfd; color: #1a1a1a; }
+
+        /* Mobile View Fix */
+        @media (max-width: 768px) {
+            .glass-card { flex-direction: column; }
+            .profile-side { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding: 40px 20px;}
+            .links-side { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card">
+        
+        <div class="profile-side">
+            <img src="assets/img/IG profile.jpeg" alt="Profile" class="profile-pic">
+            <h1>David Olawale</h1>
+            <h3>DIGITAL ARCHITECT</h3>
+            <p>Building elite, conversion-focused digital systems and high-speed web assets for the luxury real estate sector.</p>
+        </div>
+
+        <div class="links-side">
+            <div class="destination-text">SELECT DESTINATION</div>
+            
+            <a href="https://your-shadow-estate-link.com" class="link-btn btn-black">
+                <span>VIEW THE SHADOW ESTATE</span> <span>→</span>
+            </a>
+            
+            <a href="https://your-valuation-link.com" class="link-btn btn-white">
+                <span>REQUEST PRIVATE VALUATION</span> <span>→</span>
+            </a>
+            
+            <a href="https://wa.me/YOUR_PHONE_NUMBER" class="link-btn btn-white">
+                <span>WHATSAPP SECURE CHAT</span> <span>→</span>
+            </a>
+            
+            <a href="https://YOUR-PORTFOLIO-LINK.netlify.app" class="link-btn btn-white">
+                <span>MAIN PORTFOLIO</span> <span>→</span>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
